@@ -81,31 +81,31 @@ const currentProjectIndex = ref(0)
 
 const projects = [
   {
-    name: 'E-commerce Boutique',
-    description: 'Plataforma de e-commerce moderna para una boutique de ropa de lujo con sistema de carrito y pagos integrados.',
-    image: '/placeholder.svg?height=400&width=600',
-    tags: ['React', 'Node.js', 'Stripe'],
-    link: '#'
+    name: 'FlexiTaim',
+    description: 'App de turnos con actitud. FlexiTaim automatiza la reserva, los recordatorios y los pagos en un solo lugar. Con notificaciones inteligentes, códigos QR para check-in y un sistema de carrito integrado, es una solución lista para que los negocios gestionen su tiempo sin perder el estilo. Tecnología real, sin complicaciones.',
+    image: 'public/flexitaim.png',
+    tags: ['Vue', 'Node.js','Firebase','MySQL'],
+    link: 'https://flexitaim.com'
   },
   {
-    name: 'App Fitness Tracking',
-    description: 'Aplicación móvil para seguimiento de entrenamientos con análisis de progreso y comunidad integrada.',
-    image: '/placeholder.svg?height=400&width=600',
-    tags: ['React Native', 'Firebase', 'GraphQL'],
-    link: '#'
+    name: 'Guía Digital',
+    description: 'Una plataforma pensada para que cualquier negocio pueda mostrar lo que ofrece, sin depender de nadie. Te registrás, cargás tu publicación, subís las fotos, pagás con Mercado Pago y listo: estás online. Rápido, simple y 100% autogestionado. Ideal para promocionar servicios, comercios y pronto también inmuebles. Todo en un solo lugar.',
+    image: 'public/guiadigital.png',
+    tags: ['Laravel', 'Bootstrap', 'MySQL'],
+    link: 'https://guiadigital.com.ar'
   },
   {
-    name: 'Dashboard Analytics',
+    name: 'Apps de catálogos',
     description: 'Sistema de análisis en tiempo real para monitoreo de métricas empresariales con visualización de datos avanzada.',
     image: '/placeholder.svg?height=400&width=600',
     tags: ['Vue.js', 'Python', 'PostgreSQL'],
     link: '#'
   },
   {
-    name: 'App de Reservas',
+    name: 'Apps de menus',
     description: 'Aplicación completa de reservas para restaurantes con gestión de mesas y notificaciones en tiempo real.',
     image: '/placeholder.svg?height=400&width=600',
-    tags: ['Next.js', 'Supabase', 'Tailwind'],
+    tags: ['React', 'Node.js', 'Tailwind'],
     link: '#'
   }
 ]
@@ -162,6 +162,8 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400..900&display=swap');
+
 .projects {
   padding: 5rem 0;
   background: rgba(245, 245, 245, 0.3);

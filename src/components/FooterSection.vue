@@ -28,7 +28,7 @@
           <h4 class="footer-heading">Contacto</h4>
           <ul class="footer-list">
             <li>info@undevcode.com</li>
-            <li>+1 (555) 123-4567</li>
+            <li>+54 (11) 6959-2414</li>
             <li>Buenos Aires, Argentina</li>
           </ul>
         </div>
