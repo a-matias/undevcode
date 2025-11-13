@@ -4,8 +4,8 @@
       <div class="nav-content">
         <!-- Logo -->
         <div class="logo">
-          <a href="#inicio" class="logo-text">
-            UnDevCode
+          <a href="#inicio" class="logo-link">
+            <img src="/logo.svg" alt="UnDevCode Logo" class="logo-img" />
           </a>
         </div>
         
@@ -113,6 +113,8 @@ watch(mobileMenuOpen, (newVal) => {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap');
+
 /* Navigation */
 .nav {
   position: fixed;
@@ -120,9 +122,10 @@ watch(mobileMenuOpen, (newVal) => {
   left: 0;
   right: 0;
   z-index: 50;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid rgba(74, 194, 154, 0.2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .nav-container {
@@ -142,22 +145,27 @@ watch(mobileMenuOpen, (newVal) => {
   flex-shrink: 0;
 }
 
-.logo-text {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #0a0a0a;
+.logo-link {
+  display: flex;
+  align-items: center;
   text-decoration: none;
-  transition: color 0.3s;
 }
 
-.logo-text:hover {
-  color: #0070f3;
+.logo-img {
+  height: 40px;
+  width: auto;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.logo-img:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
 }
 
 .desktop-menu {
   display: none;
   align-items: center;
-  gap: 2rem;
+  gap: 2.5rem;
 }
 
 @media (min-width: 768px) {
@@ -167,32 +175,82 @@ watch(mobileMenuOpen, (newVal) => {
 }
 
 .menu-link {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #737373;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.938rem;
+  font-weight: 600;
+  color: #1a1a1a;
   text-decoration: none;
-  transition: color 0.3s;
+  transition: all 0.3s ease;
+  position: relative;
+  letter-spacing: 0.01em;
+}
+
+.menu-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #4AC29A, #2d7a5f);
+  transition: width 0.3s ease;
 }
 
 .menu-link:hover {
-  color: #0a0a0a;
+  color: #4AC29A;
+}
+
+.menu-link:hover::after {
+  width: 100%;
 }
 
 .btn-primary {
-  padding: 0.5rem 1.5rem;
-  background: #0070f3;
+  font-family: 'Inter', sans-serif;
+  padding: 0.625rem 1.75rem;
+  background: linear-gradient(135deg, #4AC29A 0%, #3aa881 100%);
   color: #ffffff;
   border: none;
-  border-radius: 9999px;
-  font-size: 0.875rem;
-  font-weight: 500;
+  border-radius: 8px;
+  font-size: 0.938rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 2px 8px rgba(74, 194, 154, 0.25),
+    0 0 0 0 rgba(74, 194, 154, 0.4);
+  letter-spacing: 0.02em;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-primary:hover::before {
+  left: 100%;
 }
 
 .btn-primary:hover {
-  background: #0051cc;
+  background: linear-gradient(135deg, #3aa881 0%, #2d7a5f 100%);
   transform: translateY(-2px);
+  box-shadow: 
+    0 4px 12px rgba(74, 194, 154, 0.35),
+    0 0 0 3px rgba(74, 194, 154, 0.15);
+}
+
+.btn-primary:active {
+  transform: translateY(0px);
+  box-shadow: 
+    0 2px 6px rgba(74, 194, 154, 0.3),
+    0 0 0 2px rgba(74, 194, 154, 0.2);
 }
 
 .mobile-menu-btn {
@@ -200,13 +258,15 @@ watch(mobileMenuOpen, (newVal) => {
   padding: 0.5rem;
   background: none;
   border: none;
-  color: #0a0a0a;
+  color: #1a1a1a;
   cursor: pointer;
-  transition: transform 0.3s;
+  transition: all 0.3s ease;
+  border-radius: 6px;
 }
 
 .mobile-menu-btn:hover {
-  transform: scale(1.1);
+  background: rgba(74, 194, 154, 0.1);
+  transform: scale(1.05);
 }
 
 @media (min-width: 768px) {
@@ -226,8 +286,9 @@ watch(mobileMenuOpen, (newVal) => {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.4);
   z-index: 40;
+  backdrop-filter: blur(2px);
 }
 
 .mobile-menu {
@@ -235,8 +296,10 @@ watch(mobileMenuOpen, (newVal) => {
   top: 5rem;
   left: 0;
   right: 0;
-  background: #ffffff;
-  border-bottom: 1px solid #e5e5e5;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(74, 194, 154, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   z-index: 45;
 }
 
@@ -247,31 +310,37 @@ watch(mobileMenuOpen, (newVal) => {
 }
 
 .mobile-menu-content {
-  padding: 1rem;
+  padding: 1.5rem 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.5rem;
   max-width: 1280px;
   margin: 0 auto;
 }
 
 .mobile-menu-link {
+  font-family: 'Inter', sans-serif;
   display: block;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #737373;
+  font-size: 0.938rem;
+  font-weight: 600;
+  color: #1a1a1a;
   text-decoration: none;
-  padding: 0.75rem 0;
-  transition: color 0.3s;
+  padding: 0.875rem 1rem;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  letter-spacing: 0.01em;
 }
 
 .mobile-menu-link:hover {
-  color: #0a0a0a;
+  background: rgba(74, 194, 154, 0.1);
+  color: #4AC29A;
+  transform: translateX(4px);
 }
 
 .btn-full {
   width: 100%;
-  margin-top: 0.5rem;
+  margin-top: 1rem;
+  padding: 0.875rem 1.75rem;
 }
 
 /* Animación suave para el menú mobile */
