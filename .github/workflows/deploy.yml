@@ -60,4 +60,4 @@ jobs:
         run: |
           rsync -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" \
             -avz --delete dist/ \
-            maframa@195.250.27.23:/home/maframa/public_html/
+            maframa@195.250.27.23:/home/maframa/undevcode.com/
