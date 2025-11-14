@@ -10,7 +10,7 @@
     <AboutSection />
 
     <!-- Services Section -->
-    <ServicesSection />
+    <!-- <ServicesSection /> -->
 
     <!-- Projects Section -->
     <ProjectsSection />

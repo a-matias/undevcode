@@ -42,12 +42,8 @@ import TerminalAnimation from './TerminalAnimation.vue'
   display: flex;
   align-items: center;
   padding: 0;
-  /* background: #4AC29A;
-  background: -webkit-linear-gradient(to right, #BDFFF3, #4AC29A);
-  background: linear-gradient(to right, #BDFFF3, #4AC29A); */
-  /* background-image: linear-gradient(to right, #434343 0%, black 100%); */
   background: linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(29, 26, 26, 0.4) 0%, rgba(0, 0, 0, 0.25) 200%);
- background-blend-mode: multiply;
+  background-blend-mode: multiply;
   overflow: hidden;
   position: relative;
 }
@@ -91,7 +87,7 @@ import TerminalAnimation from './TerminalAnimation.vue'
   letter-spacing: 1px;
   color: #FAFAFA;
   text-shadow: 0 0 15px rgba(0,0,0,0.1); 
-  font-size: 2.25rem;
+  font-size: 4rem;
 }
 
 .hero-description {

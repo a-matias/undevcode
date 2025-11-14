@@ -2,402 +2,331 @@
   <section id="proyectos" class="projects">
     <LayoutView>
       <div class="projects-header">
-        <h2 class="section-title">
-          Proyectos Destacados
-        </h2>
+        <h2 class="section-title">Proyectos Destacados</h2>
         <p class="projects-description">
           Explorá algunos de los proyectos más innovadores que hemos desarrollado para nuestros clientes
         </p>
       </div>
 
-      <!-- Carousel Container -->
-      <div 
-        ref="projectsSliderRef"
-        class="projects-carousel"
-      >
-        <div class="carousel-wrapper">
-          <!-- Project Slides -->
-          <div class="carousel-track">
-            <div 
-              v-for="(project, index) in projects" 
-              :key="index"
-              class="project-slide"
-              :class="{ 'active': index === currentProjectIndex }"
-            >
-              <div class="project-card">
-                <div class="project-image">
-                  <img :src="project.image" :alt="project.name" />
-                  <div class="project-overlay">
-                    <a :href="project.link" target="_blank" class="project-link">
-                      Ver más
-                    </a>
-                  </div>
+      <!-- Projects Grid -->
+      <div class="projects-grid">
+        <div 
+          v-for="(project, index) in projects" 
+          :key="index"
+          class="project-item"
+          @click="openProject(index)"
+          @mousemove="tiltEffect"
+          @mouseleave="resetTilt"
+        >
+          <div class="project-card">
+            <div class="project-image-wrapper">
+              <img :src="project.image" :alt="project.name" class="project-image" />
+              <div class="image-overlay"></div>
+            </div>
+
+            <div class="project-info">
+              <h3 class="project-title">{{ project.name }}</h3>
+              <p class="project-description">{{ project.description }}</p>
+
+              <div class="project-tags">
+                <span v-for="tag in project.tags" :key="tag" class="tag">
+                  {{ tag }}
+                </span>
+              </div>
+            </div>
+
+            <div class="hover-arrow">
+              <svg width="24" height="24" viewBox="0 0 24 24">
+                <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" fill="none" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal -->
+      <transition name="modal">
+        <div v-if="selectedProject !== null" class="modal-overlay" @click="selectedProject = null">
+          <div class="modal-content" @click.stop>
+            <button class="modal-close" @click="selectedProject = null">
+              ✕
+            </button>
+
+            <div class="modal-inner">
+              <div class="modal-image">
+                <img :src="projects[selectedProject].image" />
+              </div>
+
+              <div class="modal-details">
+                <h2 class="modal-title">{{ projects[selectedProject].name }}</h2>
+
+                <p class="modal-description">
+                  {{ projects[selectedProject].description }}
+                </p>
+
+                <div class="modal-tags">
+                  <span v-for="tag in projects[selectedProject].tags" :key="tag" class="tag large">
+                    {{ tag }}
+                  </span>
                 </div>
-                <div class="project-content">
-                  <h3 class="project-title">{{ project.name }}</h3>
-                  <p class="project-description">{{ project.description }}</p>
-                  <div class="project-tags">
-                    <span v-for="tag in project.tags" :key="tag" class="tag">
-                      {{ tag }}
-                    </span>
-                  </div>
-                </div>
+
+                <a 
+                  :href="projects[selectedProject].link" 
+                  target="_blank" 
+                  class="modal-link"
+                >
+                  Ver Proyecto →
+                </a>
               </div>
             </div>
           </div>
-
-          <!-- Navigation Buttons -->
-          <button class="carousel-button prev" @click="prevProject" aria-label="Proyecto anterior">
-            <ChevronLeft class="carousel-icon" />
-          </button>
-          <button class="carousel-button next" @click="nextProject" aria-label="Proyecto siguiente">
-            <ChevronRight class="carousel-icon" />
-          </button>
         </div>
-
-        <!-- Dot Indicators -->
-        <div class="carousel-dots">
-          <button 
-            v-for="(_, index) in projects" 
-            :key="index"
-            class="dot"
-            :class="{ 'active': index === currentProjectIndex }"
-            @click="goToProject(index)"
-            :aria-label="`Ir al proyecto ${index + 1}`"
-          />
-        </div>
-      </div>
+      </transition>
     </LayoutView>
   </section>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
-import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
-import LayoutView from './LayoutView.vue'
+import { ref } from 'vue';
+import LayoutView from './LayoutView.vue';
 
-const projectsSliderRef = ref(null)
-const currentProjectIndex = ref(0)
+const selectedProject = ref(null);
+
+const openProject = (index) => {
+  selectedProject.value = index;
+};
+
+const tiltEffect = (event) => {
+  const card = event.currentTarget.querySelector('.project-card');
+  const rect = card.getBoundingClientRect();
+  const x = event.clientX - rect.left - rect.width / 2;
+  const y = event.clientY - rect.top - rect.height / 2;
+
+  card.style.transform = `
+    rotateX(${-(y / 25)}deg) 
+    rotateY(${x / 25}deg)
+    scale(1.03)
+  `;
+};
+
+const resetTilt = (event) => {
+  const card = event.currentTarget.querySelector('.project-card');
+  card.style.transform = "rotateX(0) rotateY(0) scale(1)";
+};
 
 const projects = [
   {
     name: 'FlexiTaim',
-    description: 'App de turnos con actitud. FlexiTaim automatiza la reserva, los recordatorios y los pagos en un solo lugar. Con notificaciones inteligentes, códigos QR para check-in y un sistema de carrito integrado, es una solución lista para que los negocios gestionen su tiempo sin perder el estilo. Tecnología real, sin complicaciones.',
+    description: 'App de turnos con actitud. Automatiza reservas, pagos, QR y recordatorios con estilo y velocidad.',
     image: 'public/flexitaim.png',
     tags: ['Vue', 'Node.js','Firebase','MySQL'],
     link: 'https://flexitaim.com'
   },
   {
     name: 'Guía Digital',
-    description: 'Una plataforma pensada para que cualquier negocio pueda mostrar lo que ofrece, sin depender de nadie. Te registrás, cargás tu publicación, subís las fotos, pagás con Mercado Pago y listo: estás online. Rápido, simple y 100% autogestionado. Ideal para promocionar servicios, comercios y pronto también inmuebles. Todo en un solo lugar.',
+    description: 'Plataforma autogestionada para publicar negocios, fotos y servicios con pagos integrados.',
     image: 'public/guiadigital.png',
     tags: ['Laravel', 'Bootstrap', 'MySQL'],
     link: 'https://guiadigital.com.ar'
   },
   {
-    name: 'Apps de catálogos',
-    description: 'Sistema de análisis en tiempo real para monitoreo de métricas empresariales con visualización de datos avanzada.',
+    name: 'Apps de Catálogos',
+    description: 'Soluciones web para catálogos dinámicos con métricas en tiempo real.',
     image: '/placeholder.svg?height=400&width=600',
     tags: ['Vue.js', 'Python', 'PostgreSQL'],
     link: '#'
   },
   {
-    name: 'Apps de menus',
-    description: 'Aplicación completa de reservas para restaurantes con gestión de mesas y notificaciones en tiempo real.',
+    name: 'Apps de Menús',
+    description: 'Reservas para restaurantes con gestión de mesas y notificaciones.',
     image: '/placeholder.svg?height=400&width=600',
     tags: ['React', 'Node.js', 'Tailwind'],
     link: '#'
   }
-]
-
-const nextProject = () => {
-  currentProjectIndex.value = (currentProjectIndex.value + 1) % projects.length
-}
-
-const prevProject = () => {
-  currentProjectIndex.value = (currentProjectIndex.value - 1 + projects.length) % projects.length
-}
-
-const goToProject = (index) => {
-  currentProjectIndex.value = index
-}
-
-const observeElements = () => {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            entry.target.style.opacity = '1'
-            entry.target.style.transform = 'translateY(0)'
-          }, 100)
-          observer.unobserve(entry.target)
-        }
-      })
-    },
-    {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    }
-  )
-
-  if (projectsSliderRef.value) {
-    observer.observe(projectsSliderRef.value)
-  }
-
-  return observer
-}
-
-let observer = null
-
-onMounted(() => {
-  observer = observeElements()
-})
-
-onUnmounted(() => {
-  if (observer) {
-    observer.disconnect()
-  }
-})
+];
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400..900&display=swap');
-
 .projects {
-  padding: 5rem 0;
-  background: rgba(245, 245, 245, 0.3);
+  padding: 6rem 0;
+  background: linear-gradient(145deg,#f6f6f6,#eaeaea);
 }
 
-@media (min-width: 640px) {
-  .projects {
-    padding: 8rem 0;
-  }
-}
-
+/* HEADER */
 .projects-header {
   text-align: center;
   margin-bottom: 4rem;
 }
 
 .section-title {
-  font-size: 1.875rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-}
-
-@media (min-width: 640px) {
-  .section-title {
-    font-size: 2.25rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .section-title {
-    font-size: 3rem;
-  }
+  font-size: 3rem;
+  font-weight: 800;
 }
 
 .projects-description {
-  font-size: 1.125rem;
-  color: #737373;
-  max-width: 42rem;
-  margin: 0 auto;
+  color: #666;
+  max-width: 40rem;
+  margin: auto;
 }
 
-/* Carousel Container */
-.projects-carousel {
-  opacity: 0;
-  transform: translateY(2rem);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+/* GRID */
+.projects-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
 }
 
-.carousel-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto 3rem;
-}
-
-.carousel-track {
-  display: flex;
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-}
-
-.project-slide {
-  display: none;
-  width: 100%;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-}
-
-.project-slide.active {
-  display: block;
-  opacity: 1;
+/* CARD BASE */
+.project-item {
+  perspective: 1200px;
 }
 
 .project-card {
-  background: #ffffff;
-  border-radius: 1rem;
-  border: 1px solid #e5e5e5;
+  background: white;
+  border-radius: 1.2rem;
   overflow: hidden;
-  height: 100%;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+  transition: transform .25s ease, box-shadow .25s ease;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.project-item:hover .project-card {
+  box-shadow: 0 18px 45px rgba(0,0,0,0.18);
+}
+
+/* IMAGE */
+.project-image-wrapper {
+  height: 230px;
+  overflow: hidden;
+  position: relative;
 }
 
 .project-image {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  height: 350px;
-}
-
-.project-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: .5s ease;
 }
 
-.project-card:hover .project-image img {
-  transform: scale(1.05);
+.project-item:hover .project-image {
+  transform: scale(1.12);
 }
 
-.project-overlay {
+.image-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  background: linear-gradient(to bottom,transparent,rgba(0,0,0,.3));
 }
 
-.project-card:hover .project-overlay {
-  opacity: 1;
-}
-
-.project-link {
-  padding: 0.75rem 1.5rem;
-  background: #0070f3;
-  color: #ffffff;
-  border-radius: 0.5rem;
-  text-decoration: none;
-  font-weight: 600;
-  transition: background 0.3s;
-  border: none;
-  cursor: pointer;
-}
-
-.project-link:hover {
-  background: #0051cc;
-}
-
-.project-content {
-  padding: 2rem;
+/* INFO */
+.project-info {
+  padding: 1.6rem;
 }
 
 .project-title {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 700;
-  margin-bottom: 0.75rem;
-  color: #0a0a0a;
 }
 
 .project-description {
-  font-size: 0.95rem;
-  color: #737373;
-  line-height: 1.6;
-  margin-bottom: 1rem;
+  color: #777;
+  margin-top: .5rem;
+  line-height: 1.5;
 }
 
-.project-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
+/* TAGS */
 .tag {
-  display: inline-block;
-  padding: 0.35rem 0.85rem;
-  background: rgba(0, 112, 243, 0.1);
+  background: rgba(0,112,243,0.12);
   color: #0070f3;
-  border-radius: 9999px;
-  font-size: 0.8rem;
-  font-weight: 600;
+  padding: .35rem .75rem;
+  border-radius: 999px;
+  font-size: .75rem;
+  display: inline-block;
+  margin-right: .4rem;
 }
 
-/* Carousel Navigation Buttons */
-.carousel-button {
+/* ARROW */
+.hover-arrow {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 2.5rem;
-  height: 2.5rem;
-  background: rgba(0, 0, 0, 0.6);
-  border: none;
-  border-radius: 50%;
+  top: 1rem;
+  right: 1rem;
+  opacity: 0;
+  background: white;
+  border-radius: .6rem;
+  padding: .4rem;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  transition: .35s ease;
+}
+
+.project-item:hover .hover-arrow {
+  opacity: 1;
+  transform: translateY(-3px);
+}
+
+/* MODAL */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.75);
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 1rem;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 1.4rem;
+  max-width: 850px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  font-size: 1.4rem;
   cursor: pointer;
-  transition: background 0.3s ease;
-  z-index: 10;
-  color: white;
-}
-
-.carousel-button:hover {
-  background: rgba(0, 0, 0, 0.8);
-}
-
-.carousel-button.prev {
-  left: -1rem;
-}
-
-.carousel-button.next {
-  right: -1rem;
-}
-
-@media (max-width: 768px) {
-  .carousel-button.prev {
-    left: 0.5rem;
-  }
-
-  .carousel-button.next {
-    right: 0.5rem;
-  }
-}
-
-.carousel-icon {
-  width: 1.25rem;
-  height: 1.25rem;
-}
-
-/* Carousel Dots */
-.carousel-dots {
-  display: flex;
-  justify-content: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-
-.dot {
-  width: 0.75rem;
-  height: 0.75rem;
-  border-radius: 50%;
-  background: rgba(0, 112, 243, 0.3);
+  background: transparent;
   border: none;
-  cursor: pointer;
-  transition: background 0.3s ease;
 }
 
-.dot.active {
+.modal-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+.modal-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-title {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.modal-description {
+  color: #666;
+}
+
+.modal-link {
+  display: inline-block;
   background: #0070f3;
+  color: white;
+  padding: .9rem 1.6rem;
+  border-radius: .6rem;
+  text-decoration: none;
+  margin-top: 1rem;
+  transition: .3s;
 }
 
-.dot:hover {
-  background: rgba(0, 112, 243, 0.6);
+.modal-link:hover {
+  background: #005ad1;
 }
 </style>

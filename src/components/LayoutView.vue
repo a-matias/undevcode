@@ -15,10 +15,10 @@
 }
 
 .container {
-  max-width: 1280px;
+   max-width: 1280px; 
   
   margin: 0 auto;
-  padding: 0 1rem;
+   padding: 0 1rem;
 }
 
 @media (min-width: 640px) {
