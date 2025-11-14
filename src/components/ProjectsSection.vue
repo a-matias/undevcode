@@ -130,14 +130,7 @@ const projects = [
     link: 'https://guiadigital.com.ar'
   },
   {
-    name: 'Apps de Catálogos',
-    description: 'Soluciones web para catálogos dinámicos con métricas en tiempo real.',
-    image: '/placeholder.svg?height=400&width=600',
-    tags: ['Vue.js', 'Python', 'PostgreSQL'],
-    link: '#'
-  },
-  {
-    name: 'Apps de Menús',
+    name: 'ToppinFly',
     description: 'Reservas para restaurantes con gestión de mesas y notificaciones.',
     image: '/placeholder.svg?height=400&width=600',
     tags: ['React', 'Node.js', 'Tailwind'],
@@ -147,6 +140,8 @@ const projects = [
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
+
 .projects {
   padding: 6rem 0;
   background: linear-gradient(145deg,#f6f6f6,#eaeaea);
@@ -159,8 +154,11 @@ const projects = [
 }
 
 .section-title {
-  font-size: 3rem;
-  font-weight: 800;
+   font-family: "Bebas Neue", sans-serif;
+  font-weight: 500;
+  font-size: 3.5rem;
+  letter-spacing: 1px;
+  font-weight: 500;
 }
 
 .projects-description {

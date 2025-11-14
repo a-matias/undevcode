@@ -72,7 +72,7 @@ const mobileMenuOpen = ref(false)
 const menuItems = [
   { id: 'inicio', label: 'Inicio' },
   { id: 'nosotros', label: 'Nosotros' },
-  { id: 'servicios', label: 'Servicios' },
+  // { id: 'servicios', label: 'Servicios' },
   { id: 'proyectos', label: 'Proyectos' }
 ]
 
@@ -152,13 +152,13 @@ watch(mobileMenuOpen, (newVal) => {
 }
 
 .logo-img {
-  height: 40px;
+  height: 50px;
   width: auto;
   transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .logo-img:hover {
-  transform: scale(1.05);
+  transform: scale(1.1);
   filter: brightness(1.1);
 }
 
