@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Build UNDEVCODE
+    name: Build UnDevCode
     runs-on: ubuntu-latest
 
     steps:
