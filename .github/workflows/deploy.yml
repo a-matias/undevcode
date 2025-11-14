@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Build Vue App
+    name: Build UNDEVCODE
     runs-on: ubuntu-latest
 
     steps:
