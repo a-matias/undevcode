@@ -1,10 +1,5 @@
 <template>
   <section id="nosotros" class="about">
-    <div class="animated-background">
-      <div class="gradient-orb orb-1"></div>
-      <div class="gradient-orb orb-2"></div>
-      <div class="gradient-orb orb-3"></div>
-    </div>
     <div class="about-container">
       <div class="about-grid">
         <div class="about-text">
@@ -99,7 +94,6 @@ const toggleCard = (id) => {
 
 .about {
   min-height: 100vh;
-  background: #f5f5f5;
   display: flex;
   align-items: center;
   padding: 4rem 0;

@@ -122,7 +122,7 @@ watch(mobileMenuOpen, (newVal) => {
   left: 0;
   right: 0;
   z-index: 50;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.90);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(74, 194, 154, 0.2);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
@@ -296,7 +296,7 @@ watch(mobileMenuOpen, (newVal) => {
   top: 5rem;
   left: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.98);
+  background: rgba(255, 255, 255, 0.90);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(74, 194, 154, 0.2);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);

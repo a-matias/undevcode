@@ -3,14 +3,11 @@
     <!-- Navigation Component -->
     <NavBar />
 
-    <!-- Hero Section -->
-    <HeroSection />
+    <!-- Start Section -->
+    <StartSection />
 
     <!-- About Section -->
     <AboutSection />
-
-    <!-- Services Section -->
-    <!-- <ServicesSection /> -->
 
     <!-- Projects Section -->
     <ProjectsSection />
@@ -22,9 +19,8 @@
 
 <script setup>
 import NavBar from '@/components/NavBar.vue'
-import HeroSection from '@/components/HeroSection.vue'
+import StartSection from '@/components/StartSection.vue'
 import AboutSection from '@/components/AboutSection.vue'
-import ServicesSection from '@/components/ServicesSection.vue'
 import ProjectsSection from '@/components/ProjectsSection.vue'
 import FooterSection from '@/components/FooterSection.vue'
 </script>

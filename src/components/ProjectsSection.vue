@@ -144,7 +144,6 @@ const projects = [
 
 .projects {
   padding: 6rem 0;
-  background: linear-gradient(145deg,#f6f6f6,#eaeaea);
 }
 
 /* HEADER */

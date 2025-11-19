@@ -96,7 +96,7 @@ onMounted(() => {
   }, 1000)
   
   // Reiniciar animación cada 10 segundos
-  setInterval(reset, 10000)
+  // setInterval(reset, 10000)
 })
 
 onUnmounted(() => {
