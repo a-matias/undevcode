@@ -246,6 +246,7 @@ onUnmounted(() => {
   .terminal-body {
     font-size: 0.8rem;
     padding: 1rem;
+    text-align: left;
   }
   
   .terminal-title {

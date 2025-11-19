@@ -1,5 +1,5 @@
 <template>
-  <nav class="nav">
+  <nav class="nav" :class="{ scrolled: isScrolled }">
     <div class="nav-container">
       <div class="nav-content">
         <!-- Logo -->
@@ -29,13 +29,12 @@
         <button 
           @click="toggleMobileMenu"
           class="mobile-menu-btn"
+          :class="{ active: mobileMenuOpen }"
+          aria-label="Toggle menu"
         >
-          <svg v-if="!mobileMenuOpen" class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-          <svg v-else class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
+          <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+          </span>
         </button>
       </div>
     </div>
@@ -65,14 +64,14 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
 
 const mobileMenuOpen = ref(false)
+const isScrolled = ref(false)
 
 const menuItems = [
   { id: 'inicio', label: 'Inicio' },
   { id: 'nosotros', label: 'Nosotros' },
-  // { id: 'servicios', label: 'Servicios' },
   { id: 'proyectos', label: 'Proyectos' }
 ]
 
@@ -103,12 +102,24 @@ const scrollToSection = (id) => {
   }
 }
 
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 50
+}
+
 watch(mobileMenuOpen, (newVal) => {
   if (newVal) {
     document.body.style.overflow = 'hidden'
   } else {
     document.body.style.overflow = 'auto'
   }
+})
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', handleScroll)
 })
 </script>
 
@@ -122,15 +133,37 @@ watch(mobileMenuOpen, (newVal) => {
   left: 0;
   right: 0;
   z-index: 50;
-  background: rgba(255, 255, 255, 0.90);
+  background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(74, 194, 154, 0.2);
+  border-bottom: 1px solid rgba(255, 0, 200, 0.15);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.nav.scrolled {
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Mobile: fondo blanco sólido */
+@media (max-width: 767px) {
+  .nav {
+    background: rgb(255, 255, 255);
+  }
+  
+  .nav.scrolled {
+    background: rgb(255, 255, 255);
+  }
 }
 
 .nav-container {
   max-width: 1280px;
   margin: 0 auto;
+  padding: 0 1rem;
+  transition: padding 0.3s ease;
+}
+
+.nav.scrolled .nav-container {
   padding: 0 1rem;
 }
 
@@ -139,6 +172,11 @@ watch(mobileMenuOpen, (newVal) => {
   align-items: center;
   justify-content: space-between;
   height: 5rem;
+  transition: height 0.3s ease;
+}
+
+.nav.scrolled .nav-content {
+  height: 4rem;
 }
 
 .logo {
@@ -154,11 +192,15 @@ watch(mobileMenuOpen, (newVal) => {
 .logo-img {
   height: 50px;
   width: auto;
-  transition: transform 0.3s ease, filter 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.nav.scrolled .logo-img {
+  height: 40px;
 }
 
 .logo-img:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
   filter: brightness(1.1);
 }
 
@@ -183,21 +225,24 @@ watch(mobileMenuOpen, (newVal) => {
   transition: all 0.3s ease;
   position: relative;
   letter-spacing: 0.01em;
+  padding: 0.5rem 0;
 }
 
 .menu-link::after {
   content: '';
   position: absolute;
-  bottom: -4px;
-  left: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #4AC29A, #2d7a5f);
+  background: linear-gradient(90deg, #FF0000, #FF00C8);
   transition: width 0.3s ease;
+  border-radius: 2px;
 }
 
 .menu-link:hover {
-  color: #4AC29A;
+  color: #FF0000;
 }
 
 .menu-link:hover::after {
@@ -207,7 +252,7 @@ watch(mobileMenuOpen, (newVal) => {
 .btn-primary {
   font-family: 'Inter', sans-serif;
   padding: 0.625rem 1.75rem;
-  background: linear-gradient(135deg, #4AC29A 0%, #3aa881 100%);
+  background: linear-gradient(135deg, #FF0000 0%, #FF00C8 100%);
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -216,8 +261,8 @@ watch(mobileMenuOpen, (newVal) => {
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 
-    0 2px 8px rgba(74, 194, 154, 0.25),
-    0 0 0 0 rgba(74, 194, 154, 0.4);
+    0 2px 8px rgba(255, 0, 0, 0.25),
+    0 0 0 0 rgba(255, 0, 200, 0.4);
   letter-spacing: 0.02em;
   position: relative;
   overflow: hidden;
@@ -230,7 +275,7 @@ watch(mobileMenuOpen, (newVal) => {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
   transition: left 0.5s ease;
 }
 
@@ -239,34 +284,40 @@ watch(mobileMenuOpen, (newVal) => {
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #3aa881 0%, #2d7a5f 100%);
+  background: linear-gradient(135deg, #FF00C8 0%, #FF0000 100%);
   transform: translateY(-2px);
   box-shadow: 
-    0 4px 12px rgba(74, 194, 154, 0.35),
-    0 0 0 3px rgba(74, 194, 154, 0.15);
+    0 4px 12px rgba(255, 0, 200, 0.4),
+    0 0 0 3px rgba(255, 0, 0, 0.15);
 }
 
 .btn-primary:active {
   transform: translateY(0px);
   box-shadow: 
-    0 2px 6px rgba(74, 194, 154, 0.3),
-    0 0 0 2px rgba(74, 194, 154, 0.2);
+    0 2px 6px rgba(255, 0, 0, 0.3),
+    0 0 0 2px rgba(255, 0, 200, 0.2);
 }
 
+/* ===== BOTÓN HAMBURGER ANIMADO ===== */
 .mobile-menu-btn {
   display: block;
-  padding: 0.5rem;
+  padding: 0.75rem;
   background: none;
   border: none;
-  color: #1a1a1a;
   cursor: pointer;
   transition: all 0.3s ease;
-  border-radius: 6px;
+  border-radius: 8px;
+  position: relative;
+  z-index: 51;
 }
 
 .mobile-menu-btn:hover {
-  background: rgba(74, 194, 154, 0.1);
+  background: rgba(255, 0, 200, 0.1);
   transform: scale(1.05);
+}
+
+.mobile-menu-btn:active {
+  transform: scale(0.95);
 }
 
 @media (min-width: 768px) {
@@ -275,9 +326,89 @@ watch(mobileMenuOpen, (newVal) => {
   }
 }
 
-.icon {
-  width: 1.5rem;
-  height: 1.5rem;
+/* Hamburger animado */
+.hamburger-box {
+  width: 28px;
+  height: 20px;
+  display: inline-block;
+  position: relative;
+}
+
+.hamburger-inner {
+  display: block;
+  top: 50%;
+  margin-top: -1.5px;
+}
+
+.hamburger-inner,
+.hamburger-inner::before,
+.hamburger-inner::after {
+  width: 28px;
+  height: 3px;
+  background: linear-gradient(90deg, #FF0000, #FF00C8);
+  border-radius: 3px;
+  position: absolute;
+  transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
+              background 0.3s ease,
+              opacity 0.3s ease;
+}
+
+.hamburger-inner::before,
+.hamburger-inner::after {
+  content: "";
+  display: block;
+}
+
+.hamburger-inner::before {
+  top: -8px;
+  transition: top 0.3s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
+              transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
+              opacity 0.3s ease;
+}
+
+.hamburger-inner::after {
+  bottom: -8px;
+  transition: bottom 0.3s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
+              transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
+              opacity 0.3s ease;
+}
+
+/* Estado activo (X) */
+.mobile-menu-btn.active .hamburger-inner {
+  transform: rotate(45deg);
+  background: linear-gradient(135deg, #FF0000, #FF00C8);
+  transition-delay: 0.3s;
+}
+
+.mobile-menu-btn.active .hamburger-inner::before {
+  top: 0;
+  opacity: 0;
+  transition: top 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
+              opacity 0.3s 0.3s ease;
+}
+
+.mobile-menu-btn.active .hamburger-inner::after {
+  bottom: 0;
+  transform: rotate(-90deg);
+  transition: bottom 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
+              transform 0.3s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+/* Efecto de pulso al abrir */
+.mobile-menu-btn.active {
+  animation: pulse 0.5s ease;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 0, 200, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(255, 0, 200, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 0, 200, 0);
+  }
 }
 
 .mobile-overlay {
@@ -289,6 +420,11 @@ watch(mobileMenuOpen, (newVal) => {
   background: rgba(0, 0, 0, 0.4);
   z-index: 40;
   backdrop-filter: blur(2px);
+  transition: top 0.3s ease;
+}
+
+.nav.scrolled ~ .mobile-overlay {
+  top: 4rem;
 }
 
 .mobile-menu {
@@ -296,11 +432,23 @@ watch(mobileMenuOpen, (newVal) => {
   top: 5rem;
   left: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.90);
+  background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(74, 194, 154, 0.2);
+  border-bottom: 1px solid rgba(255, 0, 200, 0.15);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   z-index: 45;
+  transition: top 0.3s ease;
+}
+
+/* Mobile: menú con fondo blanco sólido */
+@media (max-width: 767px) {
+  .mobile-menu {
+    background: rgb(255, 255, 255);
+  }
+}
+
+.nav.scrolled .mobile-menu {
+  top: 4rem;
 }
 
 @media (min-width: 768px) {
@@ -329,12 +477,31 @@ watch(mobileMenuOpen, (newVal) => {
   transition: all 0.3s ease;
   border-radius: 8px;
   letter-spacing: 0.01em;
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile-menu-link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: linear-gradient(180deg, #FF0000, #FF00C8);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+  border-radius: 0 2px 2px 0;
+}
+
+.mobile-menu-link:hover::before {
+  transform: scaleY(1);
 }
 
 .mobile-menu-link:hover {
-  background: rgba(74, 194, 154, 0.1);
-  color: #4AC29A;
-  transform: translateX(4px);
+  background: rgba(255, 0, 200, 0.08);
+  color: #FF0000;
+  padding-left: 1.25rem;
 }
 
 .btn-full {
