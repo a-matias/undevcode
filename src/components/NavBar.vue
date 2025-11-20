@@ -138,6 +138,7 @@ onBeforeUnmount(() => {
   border-bottom: 1px solid rgba(255, 0, 200, 0.15);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
+  width: 100%;
 }
 
 .nav.scrolled {
@@ -161,6 +162,7 @@ onBeforeUnmount(() => {
   margin: 0 auto;
   padding: 0 1rem;
   transition: padding 0.3s ease;
+  width: 100%;
 }
 
 .nav.scrolled .nav-container {
