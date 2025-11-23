@@ -1,6 +1,5 @@
 <template>
   <section id="inicio" class="hero" aria-label="Sección inicio con estrellas parallax">
-    <!-- Capas de estrellas con parallax -->
     <div id="stars"></div>
     <div id="stars2"></div>
     <div id="stars3"></div>
@@ -14,7 +13,6 @@
           </h1>
         </div>
 
-        <!-- Componente modularizado -->
         <TerminalShowcase />
 
       </div>
@@ -34,12 +32,15 @@ onMounted(() => {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:wght@300;400;700&family=Orbitron:wght@400..900&display=swap');
 
-/* ==== HERO (contenedor) ==== */
+/* ==== HERO (contenedor FULL WIDTH) ==== */
 .hero {
+  /* Ocupa todo el ancho y alto disponible */
+  width: 100%;
   min-height: 100vh;
   display: flex;
   align-items: center;
   padding: 0;
+  /* Fondo oscuro y estrellas */
   background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
   overflow: hidden;
   position: relative;
@@ -47,7 +48,32 @@ onMounted(() => {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ==== ESTRELLAS PARALLAX ==== */
+/* ==== CONTENIDO INTERNO (Centrado y limitado) ==== */
+.hero-layout {
+  width: 100%;
+  min-height: 100vh; /* Mantiene la altura completa */
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+  
+  /* MODIFICACIÓN CLAVE: Aquí es donde centramos el contenido */
+  max-width: 1280px; 
+  margin: 0 auto;    /* Centrado horizontal */
+  padding: 0 1rem;   /* Margen seguro para móviles */
+}
+
+/* Ajustes de padding responsivo para el contenido interno */
+@media (min-width: 640px) {
+  .hero-layout { padding: 0 1.5rem; }
+}
+
+@media (min-width: 1024px) {
+  .hero-layout { padding: 0 2rem; }
+}
+
+
+/* ==== ESTRELLAS PARALLAX (Sin cambios) ==== */
 #stars {
   width: 1px;
   height: 1px;
@@ -185,22 +211,13 @@ onMounted(() => {
 }
 
 /* Contenido por encima del fondo */
-.hero-layout,
 .hero-content,
 .text-content {
   position: relative;
   z-index: 10;
 }
 
-/* ==== RESTO DE ESTILOS ==== */
-
-.hero-layout {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  min-height: 100vh;
-  padding: 2rem;
-}
+/* ==== RESTO DE ESTILOS (Content) ==== */
 
 .hero-content {
   text-align: center;

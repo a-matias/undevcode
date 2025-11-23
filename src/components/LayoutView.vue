@@ -1,14 +1,6 @@
 <template>
   <div class="layout-container">
-    <!-- Fondo global -->
-    <!-- <div class="animated-background">
-      <div class="gradient-orb orb-1"></div>
-      <div class="gradient-orb orb-2"></div>
-      <div class="gradient-orb orb-3"></div>
-    </div> -->
-
-    <!-- Contenido -->
-    <div class="container content-layer">
+    <div class="content-layer">
       <slot />
     </div>
   </div>
@@ -28,20 +20,20 @@
 /* Capa que contiene las secciones */
 .content-layer {
   position: relative;
-  z-index: 3; /* Muy importante */
+  width: 100%; /* Asegura que tome todo el ancho disponible */
+  z-index: 3;
 }
 
 /* ===== ORBES Y BACKGROUND GLOBAL ===== */
-
 .animated-background {
-  position: fixed;     /* Para que afecte TODA la landing */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: 0;
   overflow: hidden;
-  pointer-events: none; /* No interfiere con clics */
+  pointer-events: none;
 }
 
 .gradient-orb {
@@ -115,22 +107,6 @@
   50% { transform: translate(calc(-50% + 150px), calc(-50% - 100px)) scale(1.2); }
 }
 
-/* === Tu container original === */
-.container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-@media (min-width: 640px) {
-  .container {
-    padding: 0 1.5rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .container {
-    padding: 0 2rem;
-  }
-}
+/* Nota: He eliminado la clase .container de aquí porque ya no se usa en el template. 
+   Si la necesitas para otros componentes, puedes volver a añadirla como clase utilitaria. */
 </style>

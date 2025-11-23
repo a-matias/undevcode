@@ -1,18 +1,13 @@
 <template>
   <div class="app">
-    <!-- Navigation Component -->
     <NavBar />
 
-    <!-- Start Section -->
     <StartSection />
 
-    <!-- About Section -->
     <AboutSection />
 
-    <!-- Projects Section -->
     <ProjectsSection />
 
-    <!-- Footer -->
     <FooterSection />
   </div>
 </template>
@@ -26,10 +21,7 @@ import FooterSection from '@/components/FooterSection.vue'
 </script>
 
 <style scoped>
-* {
-  box-sizing: border-box;
-}
-
+/* Variables CSS */
 :root {
   --background: #ffffff;
   --foreground: #0a0a0a;
@@ -40,9 +32,15 @@ import FooterSection from '@/components/FooterSection.vue'
   --primary-foreground: #ffffff;
 }
 
+/* El contenedor principal de la vista.
+   width: 100% asegura que tome todo el ancho disponible tras el reset del body 
+*/
 .app {
+  width: 100%;
   min-height: 100vh;
   background: var(--background);
   color: var(--foreground);
+  display: flex;
+  flex-direction: column;
 }
 </style>
