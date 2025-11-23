@@ -1,39 +1,81 @@
 <template>
-  <section id="nosotros" class="about">
-    <div class="about-container">
-      <div class="about-grid">
-        <div class="about-text">
-          <h2 class="section-title">
-            SOMOS UNDEVCODE,
-          </h2>
-          <p class="text-large">
-            Un equipo apasionado por transformar ideas en soluciones digitales reales. Creemos en el poder de la tecnología para impulsar negocios y hacer la diferencia.
-          </p>
-          <p class="text-large">
-            Estamos comenzando nuestro camino, pero con la energía y el compromiso de quienes aman lo que hacen. Cada proyecto es una oportunidad para aprender, crecer y entregar valor genuino a nuestros clientes.
-          </p>
-        </div>
-        <div class="services-grid">
-          <div 
-            v-for="service in services" 
-            :key="service.id"
-            class="service-card"
-            :class="{ 'expanded': activeCard === service.id }"
-            @click="toggleCard(service.id)"
-          >
-            <div class="card-content">
-              <component :is="service.icon" class="service-icon" :size="32" :stroke-width="1.5" />
-              <div class="service-info">
-                <div class="service-label">{{ service.label }}</div>
-                <Transition name="smooth-description">
-                  <div v-if="activeCard === service.id" class="service-description">
-                    <p>{{ service.description }}</p>
-                  </div>
-                </Transition>
+  <section id="nosotros" class="about-section">
+    <div class="background-effects">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="noise-overlay"></div>
+    </div>
+
+    <div class="content-container">
+      <div class="layout-grid">
+        
+        <div class="text-column">
+          <div class="sticky-wrapper">
+            <h2 class="brand-title">
+              SOMOS UNDEVCODE
+              <span class="dot">.</span>
+            </h2>
+            
+            <div class="text-body">
+              <p class="highlight-paragraph">
+                Transformamos complejidad en experiencias digitales fluidas.
+              </p>
+              <p>
+                No somos solo desarrolladores; somos arquitectos digitales. Creemos que el código es el lenguaje del futuro y lo hablamos con fluidez para impulsar negocios que buscan liderar su industria.
+              </p>
+              <p>
+                Cada línea de código que escribimos tiene un propósito: 
+                <span class="text-accent">Escalar, Optimizar e Impactar.</span>
+              </p>
+            </div>
+
+            <div class="stats-row">
+              <div class="stat-item">
+                <span class="stat-number">+15</span>
+                <span class="stat-label">Proyectos</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">100%</span>
+                <span class="stat-label">Compromiso</span>
               </div>
             </div>
           </div>
         </div>
+
+        <div class="services-grid">
+          <div 
+            v-for="service in services" 
+            :key="service.id"
+            class="bento-card"
+            :class="{ 'is-active': activeCard === service.id }"
+            @click="toggleCard(service.id)"
+            @mouseenter="hoverCard(service.id)"
+            @mouseleave="leaveCard"
+          >
+            <div class="card-glow"></div>
+            
+            <div class="card-inner">
+              <div class="icon-wrapper">
+                <component :is="service.icon" :stroke-width="1.5" />
+              </div>
+              
+              <div class="content-wrapper">
+                <h3 class="service-title">{{ service.label }}</h3>
+                <div class="service-details">
+                  <p>{{ service.description }}</p>
+                </div>
+              </div>
+
+              <div class="interaction-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -41,391 +83,346 @@
 
 <script setup>
 import { ref } from 'vue';
-import { Monitor, Cloud, Link, BookOpen, Rocket, Lightbulb } from 'lucide-vue-next';
+import { Monitor, Cpu, Layers, Zap, Database, Terminal } from 'lucide-vue-next';
 
 const activeCard = ref(null);
+let hoverTimeout = null;
 
-const services = [
-  {
-    id: 1,
-    icon: Monitor,
-    label: "Desarrollo Web & Mobile",
-    description: "Creamos aplicaciones web modernas y apps móviles nativas que se adaptan perfectamente a las necesidades de tu negocio."
-  },
-  {
-    id: 2,
-    icon: Cloud,
-    label: "Software SAAS",
-    description: "Desarrollamos plataformas cloud escalables con arquitecturas robustas que crecen junto a tu empresa."
-  },
-  {
-    id: 3,
-    icon: Link,
-    label: "Integraciones",
-    description: "Conectamos tus sistemas y herramientas para automatizar procesos y mejorar la eficiencia operativa."
-  },
-  {
-    id: 4,
-    icon: BookOpen,
-    label: "Capacitaciones",
-    description: "Formamos a tu equipo en las mejores prácticas y tecnologías actuales del desarrollo de software."
-  },
-  {
-    id: 5,
-    icon: Rocket,
-    label: "Modernización",
-    description: "Actualizamos sistemas legacy a arquitecturas modernas, mejorando rendimiento y mantenibilidad."
-  },
-  {
-    id: 6,
-    icon: Lightbulb,
-    label: "Consultoría",
-    description: "Asesoramos en estrategia tecnológica y arquitectura de software para tomar las mejores decisiones."
-  }
-];
-
+// Lógica de interacción híbrida (Click funciona siempre, Hover opcional)
 const toggleCard = (id) => {
   activeCard.value = activeCard.value === id ? null : id;
 };
+
+// Opcional: Si quieres que se abra al pasar el mouse (descomenta para activar)
+const hoverCard = (id) => {
+  // if (window.innerWidth > 1024) activeCard.value = id; 
+};
+
+const leaveCard = () => {
+  // if (window.innerWidth > 1024) activeCard.value = null;
+};
+
+// Datos mejorados para sonar "High-End"
+const services = [
+  {
+    id: 1,
+    icon: Monitor, // Antes Monitor
+    label: "Ingeniería Web",
+    description: "Desarrollo de ecosistemas digitales completos. Desde SPAs reactivas hasta portales corporativos de alto tráfico."
+  },
+  {
+    id: 2,
+    icon: Database, // Antes Cloud
+    label: "Arquitectura SaaS",
+    description: "Diseñamos la infraestructura escalable que tu producto necesita para crecer de 10 a 10.000 usuarios sin fricción."
+  },
+  {
+    id: 3,
+    icon: Layers, // Antes Link
+    label: "Ecosistemas API",
+    description: "Conectamos tu negocio al mundo. Integraciones robustas (Stripe, AFIP, Maps) y desarrollo de APIs RESTful seguras."
+  },
+  {
+    id: 4,
+    icon: Terminal, // Antes BookOpen
+    label: "Mentoria Técnica",
+    description: "Potenciamos equipos in-house. Transferencia de conocimiento, code reviews y estandarización de buenas prácticas."
+  },
+  {
+    id: 5,
+    icon: Cpu, // Antes Rocket
+    label: "Refactor & Scale",
+    description: "Modernización de sistemas legacy. Migramos tu código antiguo a tecnologías modernas (Vue 3, React, Node) optimizando rendimiento."
+  },
+  {
+    id: 6,
+    icon: Zap, // Antes Lightbulb
+    label: "Consultoría IT",
+    description: "Diagnóstico estratégico. Te ayudamos a elegir el stack tecnológico correcto para evitar deuda técnica futura."
+  }
+];
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500&display=swap');
 
-.about {
+/* --- LAYOUT GENERAL --- */
+.about-section {
+  position: relative;
   min-height: 100vh;
+  width: 100%;
+  background: #ffffff; /* Fondo base limpio */
+  overflow: hidden;
+  padding: 6rem 0;
   display: flex;
   align-items: center;
-  padding: 4rem 0;
-  width: 100%;
-  position: relative;
-  overflow: hidden;
 }
 
-/* Fondo animado con orbes de gradiente */
-.animated-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  overflow: hidden;
-}
-
-.gradient-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(25px);
-  opacity: 0.6;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-}
-
-/* <CHANGE> Reducir tamaño de orbes en mobile */
-.orb-1 {
-  width: 200px;
-  height: 200px;
-  background: linear-gradient(135deg, rgba(0, 112, 243, 0.3) 0%, rgba(0, 212, 255, 0.2) 100%);
-  top: -10%;
-  left: -10%;
-  animation: float1 20s infinite;
-}
-
-.orb-2 {
-  width: 150px;
-  height: 150px;
-  background: linear-gradient(135deg, rgba(147, 51, 234, 0.25) 0%, rgba(59, 130, 246, 0.2) 100%);
-  bottom: -10%;
-  right: -10%;
-  animation: float2 25s infinite;
-}
-
-.orb-3 {
-  width: 120px;
-  height: 120px;
-  background: linear-gradient(135deg, rgba(6, 182, 212, 0.2) 0%, rgba(16, 185, 129, 0.15) 100%);
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: float3 30s infinite;
-}
-
-/* <CHANGE> Aumentar tamaño de orbes en tablet y desktop */
-@media (min-width: 768px) {
-  .orb-1 {
-    width: 400px;
-    height: 400px;
-  }
-
-  .orb-2 {
-    width: 350px;
-    height: 350px;
-  }
-
-  .orb-3 {
-    width: 300px;
-    height: 300px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .orb-1 {
-    width: 500px;
-    height: 500px;
-  }
-
-  .orb-2 {
-    width: 400px;
-    height: 400px;
-  }
-
-  .orb-3 {
-    width: 350px;
-    height: 350px;
-  }
-}
-
-@keyframes float1 {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-  }
-  33% {
-    transform: translate(100px, -80px) scale(1.1);
-  }
-  66% {
-    transform: translate(-50px, 100px) scale(0.9);
-  }
-}
-
-@keyframes float2 {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-  }
-  33% {
-    transform: translate(-120px, 60px) scale(1.15);
-  }
-  66% {
-    transform: translate(80px, -100px) scale(0.85);
-  }
-}
-
-@keyframes float3 {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(1);
-  }
-  50% {
-    transform: translate(calc(-50% + 150px), calc(-50% - 100px)) scale(1.2);
-  }
-}
-
-.about-container {
+.content-container {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 1.5rem;
   position: relative;
-  z-index: 1;
+  z-index: 10;
 }
 
-@media (min-width: 640px) {
-  .about-container {
-    padding: 0 2rem;
-  }
+/* --- BACKGROUND FX --- */
+.background-effects {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
 }
 
-@media (min-width: 1024px) {
-  .about-container {
-    padding: 0 3rem;
-  }
+.noise-overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-.about-grid {
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  animation: float 20s infinite ease-in-out;
+}
+
+.orb-1 { width: 500px; height: 500px; background: rgba(0, 112, 243, 0.15); top: -10%; left: -10%; }
+.orb-2 { width: 400px; height: 400px; background: rgba(255, 0, 200, 0.1); bottom: -10%; right: -5%; animation-delay: -5s; }
+.orb-3 { width: 300px; height: 300px; background: rgba(16, 185, 129, 0.1); top: 40%; left: 40%; animation-delay: -10s; }
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(30px, -50px); }
+}
+
+/* --- GRID LAYOUT --- */
+.layout-grid {
   display: grid;
-  gap: 3rem;
-  align-items: center;
-}
-
-@media (min-width: 768px) {
-  .about-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 3rem;
-  }
+  gap: 4rem;
 }
 
 @media (min-width: 1024px) {
-  .about-grid {
-    gap: 5rem;
+  .layout-grid {
+    grid-template-columns: 0.8fr 1.2fr; /* Texto más angosto, grid más ancho */
+    gap: 6rem;
+    align-items: start;
   }
 }
 
-.section-title {
-  font-family: "Bebas Neue", sans-serif;
+/* --- LEFT COLUMN: TEXT --- */
+.sticky-wrapper {
+  position: sticky;
+  top: 8rem; /* Se queda fijo al scrollear en desktop */
+}
+
+.brand-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 6vw, 5.5rem);
+  line-height: 0.9;
+  color: #171717;
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
+}
+
+.dot {
+  color: #0070f3;
+}
+
+.text-body {
+  font-family: 'Inter', sans-serif;
+  color: #525252;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.highlight-paragraph {
+  font-size: 1.25rem;
+  color: #171717;
   font-weight: 500;
-  font-size: 3rem;
-  margin-bottom: 1.5rem;
-  color: black;
+  border-left: 3px solid #0070f3;
+  padding-left: 1rem;
 }
 
-@media (min-width: 640px) {
-  .section-title {
-    font-size: 3.75rem;
-  }
+.text-accent {
+  font-weight: 600;
+  color: #0070f3;
 }
 
-@media (min-width: 1024px) {
-  .section-title {
-    font-size: 6rem;
-  }
+.stats-row {
+  margin-top: 3rem;
+  display: flex;
+  gap: 3rem;
+  border-top: 1px solid #e5e5e5;
+  padding-top: 2rem;
 }
 
-.text-large {
-  font-family: "Inter", sans-serif;
-  font-weight: 400;
-  font-size: 1.125rem;
-  color: #404040;
-  line-height: 1.8;
-  letter-spacing: -0.01em;
+.stat-item {
+  display: flex;
+  flex-direction: column;
 }
 
-.about-text p:first-of-type {
-  margin-bottom: 1.5rem;
+.stat-number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem;
+  color: #171717;
 }
 
+.stat-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  color: #737373;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* --- RIGHT COLUMN: BENTO GRID --- */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
 }
 
 @media (min-width: 640px) {
   .services-grid {
-    gap: 1.25rem;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-.service-card {
-  background: #ffffff;
-  padding: 1.75rem 1.25rem;
-  border-radius: 1rem;
-  border: 1px solid #e5e5e5;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+/* --- MAGIC CARD STYLES --- */
+.bento-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.7); /* Glass effect */
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
   cursor: pointer;
-  grid-column: span 1;
-  will-change: transform;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  height: 180px; /* Altura base */
 }
 
-.service-card:hover:not(.expanded) {
+.bento-card:hover {
+  background: rgba(255, 255, 255, 0.95);
   transform: translateY(-4px);
-  border-color: #0070f3;
-  box-shadow: 0 12px 24px -10px rgba(0, 112, 243, 0.2);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
 }
 
-/* <CHANGE> Cambiar animación de expansión - ahora crece suavemente sin cambiar grid-column */
-.service-card.expanded {
+/* Estado Activo (Expandido) */
+.bento-card.is-active {
   background: #ffffff;
-  box-shadow: 0 20px 40px -10px rgba(0, 112, 243, 0.15);
-  border-color: #0070f3;
+  height: 280px; /* Crece verticalmente */
+  box-shadow: 0 20px 40px rgba(0, 112, 243, 0.15);
 }
 
-.card-content {
+/* Borde brillante animado */
+.card-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  padding: 2px; /* Grosor del borde */
+  background: linear-gradient(135deg, #0070f3, #FF00C8);
+  -webkit-mask: 
+     linear-gradient(#fff 0 0) content-box, 
+     linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.bento-card.is-active .card-glow {
+  opacity: 1;
+}
+
+.card-inner {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
+}
+
+/* Icono */
+.icon-wrapper {
+  width: 48px;
+  height: 48px;
+  background: #f5f5f5;
+  border-radius: 12px;
+  display: flex;
   align-items: center;
-  text-align: center;
-  gap: 0.75rem;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* <CHANGE> Nuevo layout para estado expandido - más suave */
-.expanded .card-content {
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 0.75rem;
-}
-
-.service-icon {
-  font-size: 2rem;
-  filter: grayscale(0.3);
-  transition: all 0.3s ease;
-  flex-shrink: 0;
-}
-
-.service-card:hover:not(.expanded) .service-icon {
-  filter: grayscale(0);
-  transform: scale(1.1);
-}
-
-.expanded .service-icon {
-  font-size: 2rem;
-  filter: grayscale(0);
-}
-
-.service-info {
-  flex: 1;
-  width: 100%;
-}
-
-.service-label {
-  font-family: "Inter", sans-serif;
-  font-size: 0.875rem;
-  font-weight: 500;
+  justify-content: center;
   color: #404040;
-  transition: color 0.3s ease;
+  margin-bottom: 1.5rem;
+  transition: all 0.4s ease;
 }
 
-.service-card:hover:not(.expanded) .service-label {
-  color: #0070f3;
+.icon-wrapper svg {
+  width: 24px;
+  height: 24px;
 }
 
-.expanded .service-label {
-  font-size: 1rem;
-  color: #0070f3;
+.bento-card:hover .icon-wrapper {
+  background: #0070f3;
+  color: white;
+  transform: scale(1.1) rotate(-5deg);
+}
+
+.bento-card.is-active .icon-wrapper {
+  background: #0070f3;
+  color: white;
+}
+
+/* Contenido */
+.content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.service-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #171717;
   margin-bottom: 0.5rem;
 }
 
-@media (min-width: 640px) {
-  .service-label {
-    font-size: 0.9375rem;
-  }
-}
-
-/* <CHANGE> Nueva transición suave para la descripción */
-.service-description {
-  max-height: 0;
+.service-details {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  color: #737373;
+  line-height: 1.5;
   opacity: 0;
-  overflow: hidden;
-  transform: translateY(-8px);
+  transform: translateY(10px);
+  transition: all 0.4s ease 0.1s; /* Delay para que se vea suave */
 }
 
-.expanded .service-description {
-  max-height: 15rem;
+/* Revelar texto solo al activar */
+.bento-card.is-active .service-details {
   opacity: 1;
   transform: translateY(0);
 }
 
-.service-description p {
-  font-family: "Inter", sans-serif;
-  font-size: 0.875rem;
-  color: #5e5e5e;
-  line-height: 1.6;
-  margin: 0;
+/* Icono + / - */
+.interaction-icon {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  color: #a3a3a3;
+  transition: transform 0.4s ease;
 }
 
-/* <CHANGE> Definir transición suave */
-.smooth-description-enter-active,
-.smooth-description-leave-active {
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.smooth-description-enter-from {
-  opacity: 0;
-  transform: translateY(-12px);
-}
-
-.smooth-description-leave-to {
-  opacity: 0;
-  transform: translateY(-12px);
+.bento-card.is-active .interaction-icon {
+  transform: rotate(45deg); /* Se convierte en X */
+  color: #0070f3;
 }
 </style>
