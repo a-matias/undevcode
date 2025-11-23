@@ -4,19 +4,52 @@
     <div id="stars2"></div>
     <div id="stars3"></div>
 
+    <div class="hero-glow"></div>
+
     <div class="hero-layout">
       <div class="hero-content">
 
         <div class="text-content">
-          <h1 class="hero-title">
-            Transformamos ideas en soluciones digitales
+          <div class="badge-wrapper fade-in-1">
+            <span class="badge">Innovation Lab 2025</span>
+          </div>
+
+          <h1 class="hero-title fade-in-2">
+            Transformamos ideas en <br />
+            <span class="gradient-text">soluciones digitales</span>
           </h1>
+          
+          <p class="hero-subtitle fade-in-3">
+            Diseñamos y desarrollamos software de alto impacto. 
+            Llevamos tu negocio al siguiente nivel con tecnología de vanguardia y arquitectura escalable.
+          </p>
+
+          <div class="cta-group fade-in-4">
+            <a href="#proyectos" class="btn-primary">
+              Ver Proyectos
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+            <a href="#nosotros" class="btn-secondary">
+              Conocenos
+            </a>
+          </div>
         </div>
 
-        <TerminalShowcase />
+        <div class="terminal-wrapper fade-in-delayed">
+          <TerminalShowcase />
+        </div>
 
       </div>
     </div>
+
+    <a href="#nosotros" class="scroll-indicator fade-in-5">
+      <span class="mouse">
+        <span class="wheel"></span>
+      </span>
+      <span class="arrow-down"></span>
+    </a>
   </section>
 </template>
 
@@ -25,55 +58,293 @@ import { onMounted } from 'vue'
 import TerminalShowcase from './TerminalShowcase.vue'
 
 onMounted(() => {
-  // Componente montado
+  // Aquí podrías agregar lógica adicional si fuese necesario
 })
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:wght@300;400;700&family=Orbitron:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500&display=swap');
 
-/* ==== HERO (contenedor FULL WIDTH) ==== */
+/* ==== HERO BASE ==== */
 .hero {
-  /* Ocupa todo el ancho y alto disponible */
   width: 100%;
   min-height: 100vh;
   display: flex;
   align-items: center;
   padding: 0;
-  /* Fondo oscuro y estrellas */
   background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
   overflow: hidden;
   position: relative;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-/* ==== CONTENIDO INTERNO (Centrado y limitado) ==== */
+/* Glow atmosférico detrás del texto */
+.hero-glow {
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0, 112, 243, 0.15) 0%, transparent 70%);
+  filter: blur(80px);
+  z-index: 1;
+  pointer-events: none;
+}
+
 .hero-layout {
   width: 100%;
-  min-height: 100vh; /* Mantiene la altura completa */
+  min-height: 100vh;
   display: flex;
   align-items: center;
   position: relative;
   z-index: 10;
-  
-  /* MODIFICACIÓN CLAVE: Aquí es donde centramos el contenido */
   max-width: 1280px; 
-  margin: 0 auto;    /* Centrado horizontal */
-  padding: 0 1rem;   /* Margen seguro para móviles */
+  margin: 0 auto;
+  padding: 6rem 1rem 2rem 1rem; /* Padding top extra por el navbar */
 }
 
-/* Ajustes de padding responsivo para el contenido interno */
-@media (min-width: 640px) {
-  .hero-layout { padding: 0 1.5rem; }
+@media (min-width: 640px) { .hero-layout { padding-left: 1.5rem; padding-right: 1.5rem; } }
+@media (min-width: 1024px) { .hero-layout { padding-left: 2rem; padding-right: 2rem; } }
+
+/* ==== LAYOUT CONTENT ==== */
+.hero-content {
+  text-align: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (min-width: 1024px) {
-  .hero-layout { padding: 0 2rem; }
+  .hero-content {
+    flex-direction: row;
+    text-align: left;
+    justify-content: space-between;
+    align-items: center; /* Alineación vertical centrada */
+  }
 }
 
+.text-content {
+  flex: 1;
+  max-width: 650px; /* Evita que el texto se estire demasiado */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centrado en móvil */
+  z-index: 20;
+}
 
-/* ==== ESTRELLAS PARALLAX (Sin cambios) ==== */
+@media (min-width: 1024px) {
+  .text-content {
+    align-items: flex-start; /* Izquierda en desktop */
+  }
+}
+
+/* ==== TYPOGRAPHY & ELEMENTS ==== */
+.badge-wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.badge {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.4rem 1rem;
+  border-radius: 50px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem;
+  color: #a5f3fc;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hero-title {
+  font-family: "Bebas Neue", sans-serif;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #FAFAFA;
+  font-size: 3rem;
+  line-height: 1;
+  margin-bottom: 1.5rem;
+}
+
+.gradient-text {
+  /* Gradiente más brillante y moderno */
+  background: linear-gradient(135deg, #ffffff 0%, #0070f3 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@media (min-width: 640px) { .hero-title { font-size: 3.75rem; } }
+@media (min-width: 1024px) { .hero-title { font-size: 5rem; } }
+
+.hero-subtitle {
+  font-family: 'Inter', sans-serif;
+  color: #94a3b8; /* Gris azulado claro */
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
+  max-width: 500px;
+}
+
+@media (min-width: 1024px) { .hero-subtitle { font-size: 1.125rem; } }
+
+/* ==== BUTTONS ==== */
+.cta-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media (min-width: 1024px) { .cta-group { justify-content: flex-start; } }
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #ffffff;
+  color: #000000;
+  padding: 0.8rem 1.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.4);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.8rem 1.8rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  text-decoration: none;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #ffffff;
+}
+
+/* ==== TERMINAL WRAPPER (Animation) ==== */
+.terminal-wrapper {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  /* Animación de flotación suave */
+  animation: float-terminal 6s ease-in-out infinite;
+}
+
+@media (min-width: 1024px) {
+  .terminal-wrapper {
+    justify-content: flex-end;
+  }
+}
+
+@keyframes float-terminal {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+/* ==== SCROLL INDICATOR ==== */
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+.scroll-indicator:hover {
+  opacity: 1;
+}
+
+.mouse {
+  width: 26px;
+  height: 40px;
+  border: 2px solid #fff;
+  border-radius: 20px;
+  position: relative;
+}
+
+.wheel {
+  width: 4px;
+  height: 8px;
+  background: #fff;
+  border-radius: 2px;
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: scroll-wheel 1.5s infinite;
+}
+
+.arrow-down {
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(45deg);
+  animation: scroll-arrow 1.5s infinite;
+  animation-delay: 0.2s;
+}
+
+@keyframes scroll-wheel {
+  0% { top: 6px; opacity: 1; }
+  100% { top: 18px; opacity: 0; }
+}
+
+@keyframes scroll-arrow {
+  0% { opacity: 0; transform: rotate(45deg) translate(-5px, -5px); }
+  50% { opacity: 1; }
+  100% { opacity: 0; transform: rotate(45deg) translate(5px, 5px); }
+}
+
+/* ==== ENTRANCE ANIMATIONS (Fade In Up) ==== */
+.fade-in-1 { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; animation-delay: 0.1s; }
+.fade-in-2 { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; animation-delay: 0.3s; }
+.fade-in-3 { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; animation-delay: 0.5s; }
+.fade-in-4 { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; animation-delay: 0.7s; }
+.fade-in-delayed { animation: fadeInUp 1s ease-out forwards; opacity: 0; animation-delay: 0.5s; }
+.fade-in-5 { animation: fadeIn 1s ease-out forwards; opacity: 0; animation-delay: 1.2s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 0.7; }
+}
+
+/* ==== TUS ESTRELLAS (Sin tocar el CSS original) ==== */
 #stars {
   width: 1px;
   height: 1px;
@@ -208,63 +479,5 @@ onMounted(() => {
   to {
     transform: translateY(-2000px);
   }
-}
-
-/* Contenido por encima del fondo */
-.hero-content,
-.text-content {
-  position: relative;
-  z-index: 10;
-}
-
-/* ==== RESTO DE ESTILOS (Content) ==== */
-
-.hero-content {
-  text-align: center;
-  width: 100%;
-  max-width: 70rem;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-  align-items: center;
-  justify-content: center;
-}
-
-@media (min-width: 1024px) {
-  .hero-content {
-    flex-direction: row;
-    text-align: left;
-    gap: 4rem;
-  }
-}
-
-.text-content {
-  flex: 1;
-}
-
-.hero-title {
-  font-family: "Bebas Neue", sans-serif;
-  text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: #FAFAFA;
-  background: -webkit-linear-gradient(white, #38495a);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: none;
-  font-size: 2.5rem;
-  line-height: 1.1;
-}
-
-@media (min-width: 640px) {
-  .hero-title { font-size: 3rem; }
-}
-@media (min-width: 768px) {
-  .hero-title { font-size: 3.75rem; }
-}
-@media (min-width: 1024px) {
-  .hero-title { font-size: 4.5rem; }
 }
 </style>
