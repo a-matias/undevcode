@@ -6,7 +6,7 @@
       
       <div class="footer-cta">
         <span class="cta-label">¿Tenés una idea?</span>
-        <a href="mailto:info@undevcode.com" class="cta-title">
+        <a href="mailto:contacto@undevcode.com" class="cta-title">
           HABLEMOS
           <span class="arrow-icon">↗</span>
         </a>
@@ -52,7 +52,7 @@
           <h5 class="box-title">Conectar</h5>
           
           <button @click="copyEmail" class="copy-email-btn" :class="{ 'copied': emailCopied }">
-            <span class="email-text">info@undevcode.com</span>
+            <span class="email-text">contacto@undevcode.com</span>
             <span class="copy-icon">
               {{ emailCopied ? 'Copiado!' : 'Copiar' }}
             </span>
