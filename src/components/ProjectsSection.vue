@@ -109,23 +109,23 @@ const projects = [
     shortDescription: 'Gestión de turnos inteligente con pagos QR automatizados.',
     fullDescription: 'FlexiTaim revoluciona la gestión de reservas permitiendo a los negocios automatizar su calendario. Incluye recordatorios por WhatsApp, pagos integrados con MercadoPago y un panel de administración en tiempo real.',
     image: '/project-flexitaim.svg', // Ruta relativa a public
-    tags: ['Vue.js', 'Node.js', 'Firebase', 'Stripe'],
+    tags: ['Vue.js', 'Node.js', 'Firebase', 'MySQL'],
     link: 'https://flexitaim.com'
   },
   {
     name: 'Guía Digital',
     shortDescription: 'Directorio comercial autogestionable con geolocalización.',
     fullDescription: 'Una plataforma robusta donde los comercios locales pueden crear su presencia digital en minutos. Cuenta con subida de imágenes optimizada, SEO automático y sistema de reviews verificado.',
-    image: '/guiadigital.png',
-    tags: ['Laravel', 'MySQL', 'Bootstrap', 'AWS S3'],
+    image: '/project-guiadigital.svg',
+    tags: ['Laravel', 'Bootstrap', 'MySQL', 'AWS S3'],
     link: 'https://guiadigital.com.ar'
   },
   {
     name: 'ToppinFly',
     shortDescription: 'Sistema de reservas gastronómicas de alta demanda.',
     fullDescription: 'Diseñado para restaurantes de alto tráfico, ToppinFly gestiona mesas, listas de espera y pedidos anticipados para reducir el tiempo de rotación de mesas y mejorar la experiencia del comensal.',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop',
-    tags: ['React', 'Next.js', 'Tailwind', 'Supabase'],
+    image: '/project-toppingfly.svg',
+    tags: ['React', 'Next.js', 'Firebase', 'AWS S3'],
     link: '#'
   }
 ];
@@ -172,6 +172,7 @@ watch(selectedProject, (val) => {
 <style scoped>
 /* Importación de fuentes (ya deberías tenerlas en index.html o App.vue, pero por seguridad) */
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500&display=swap');
 
 .projects-section {
   padding: 6rem 1.5rem;
@@ -201,21 +202,24 @@ watch(selectedProject, (val) => {
 
 .section-title {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(3rem, 5vw, 5rem);
-  line-height: 0.9;
-  color: #0a0a0a;
-  margin-bottom: 1rem;
+  font-size: clamp(3.5rem, 6vw, 5.5rem);
+  line-height: 0.9; /* Corregido para evitar superposición */
+  color: #171717;
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
 }
 
 .section-title .highlight {
   color: transparent;
-  -webkit-text-stroke: 1px #0a0a0a; /* Efecto outline moderno */
+  -webkit-text-stroke: 0.5px #0a0a0a;
   display: block;
+  margin-top: 5px; /* Un pequeño respiro visual en móvil */
 }
 
 @media (min-width: 1024px) {
   .section-title .highlight {
     display: inline;
+    margin-top: 0;
   }
 }
 

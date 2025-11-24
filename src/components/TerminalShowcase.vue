@@ -191,6 +191,7 @@ onMounted(() => {
 @media (max-width: 640px) {
   .terminal-screen {
     min-height: 100%; /* Se adapta al contenedor padre */
+    display: none;
   }
   
   .line {
