@@ -6,6 +6,8 @@
 
     <AboutSection />
 
+    <ServicesSection />
+
     <ProjectsSection />
 
     <FooterSection />
@@ -18,6 +20,7 @@ import StartSection from '@/components/StartSection.vue'
 import AboutSection from '@/components/AboutSection.vue'
 import ProjectsSection from '@/components/ProjectsSection.vue'
 import FooterSection from '@/components/FooterSection.vue'
+import ServicesSection from '@/components/ServicesSection.vue'
 </script>
 
 <style scoped>

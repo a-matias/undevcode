@@ -3,13 +3,19 @@
     <div class="projects-container">
       
       <div class="section-header">
-        <h2 class="section-title">
-          NUESTRO <span class="highlight">TRABAJO</span>
-        </h2>
-        <p class="section-subtitle">
-          Ingeniería de software aplicada a soluciones reales. 
-          Selección de nuestros desarrollos más recientes.
-        </p>
+        <div class="title-container">
+          <h2 class="section-title">
+            NUESTRO <br class="mobile-break" />
+            <span class="highlight">TRABAJO</span><span class="dot">.</span>
+          </h2>
+        </div>
+        
+        <div class="subtitle-container">
+          <p class="section-subtitle">
+            Ingeniería de software aplicada a soluciones reales. <br>
+            Selección de nuestros desarrollos más recientes.
+          </p>
+        </div>
       </div>
 
       <div class="projects-grid">
@@ -33,9 +39,11 @@
             <div class="card-content">
               <div class="card-header-row">
                 <h3 class="card-title">{{ project.name }}</h3>
-                <svg class="arrow-icon" viewBox="0 0 24 24" width="24" height="24">
-                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                <div class="icon-box">
+                  <svg class="arrow-icon" viewBox="0 0 24 24" width="20" height="20">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
               </div>
               
               <p class="card-desc">{{ project.shortDescription }}</p>
@@ -70,7 +78,7 @@
             </div>
 
             <div class="modal-info">
-              <div>
+              <div class="info-top">
                 <h2 class="modal-title">{{ projects[selectedProject].name }}</h2>
                 <div class="modal-tags-list">
                   <span v-for="tag in projects[selectedProject].tags" :key="tag" class="modal-tag">
@@ -102,13 +110,13 @@ import { ref, watch } from 'vue';
 const selectedProject = ref(null);
 const hoveredIndex = ref(null);
 
-// Datos Simulados (Asegúrate de tener las imágenes en /public)
+// Datos Simulados
 const projects = [
   {
     name: 'FlexiTaim',
     shortDescription: 'Gestión de turnos inteligente con pagos QR automatizados.',
     fullDescription: 'FlexiTaim revoluciona la gestión de reservas permitiendo a los negocios automatizar su calendario. Incluye recordatorios por WhatsApp, pagos integrados con MercadoPago y un panel de administración en tiempo real.',
-    image: '/project-flexitaim.svg', // Ruta relativa a public
+    image: '/project-flexitaim.svg', 
     tags: ['Vue.js', 'Node.js', 'Firebase', 'MySQL'],
     link: 'https://flexitaim.com'
   },
@@ -130,19 +138,16 @@ const projects = [
   }
 ];
 
-// Lógica de Tilt 3D Suavizada
+// Lógica de Tilt 3D
 const handleTilt = (e) => {
   const card = e.currentTarget.querySelector('.project-card');
   const rect = e.currentTarget.getBoundingClientRect();
   const x = e.clientX - rect.left;
   const y = e.clientY - rect.top;
-  
   const centerX = rect.width / 2;
   const centerY = rect.height / 2;
-  
-  const rotateX = ((y - centerY) / 20) * -1; // Invertimos para efecto natural
+  const rotateX = ((y - centerY) / 20) * -1;
   const rotateY = (x - centerX) / 20;
-
   card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
 };
 
@@ -151,7 +156,7 @@ const resetCard = (e) => {
   card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
 };
 
-// Control del Modal y Scroll del Body
+// Modal Logic
 const openProject = (index) => {
   selectedProject.value = index;
 };
@@ -161,81 +166,102 @@ const closeProject = () => {
 };
 
 watch(selectedProject, (val) => {
-  if (val !== null) {
-    document.body.style.overflow = 'hidden'; // Bloquear scroll
-  } else {
-    document.body.style.overflow = ''; // Restaurar scroll
-  }
+  document.body.style.overflow = val !== null ? 'hidden' : '';
 });
 </script>
 
 <style scoped>
-/* Importación de fuentes (ya deberías tenerlas en index.html o App.vue, pero por seguridad) */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500&display=swap');
+/* FUENTES */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@300;400;500;600&family=Bebas+Neue&display=swap');
 
 .projects-section {
-  padding: 6rem 1.5rem;
-  background-color: #ffffff; /* Fondo limpio para contrastar con el Hero oscuro */
-  position: relative;
+  padding: 8rem 1.5rem; /* Más aire arriba y abajo */
+  background-color: #fcfcfc; /* Un blanco técnico muy sutil */
+  color: #1a1a1a;
 }
 
-/* --- HEADER --- */
 .projects-container {
   max-width: 1280px;
   margin: 0 auto;
 }
 
+/* --- HEADER MINIMALISTA & PROFESIONAL --- */
 .section-header {
-  margin-bottom: 5rem;
-  text-align: center; /* Centrado en móvil */
+  margin-bottom: 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 @media (min-width: 1024px) {
   .section-header {
-    text-align: left; /* Alineado izq en desktop */
-    display: flex;
+    flex-direction: row;
+    /* CLAVE: Alineamos al final para que la base del texto coincida */
+    align-items: flex-end; 
     justify-content: space-between;
-    align-items: flex-end;
   }
 }
 
 .section-title {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(3.5rem, 6vw, 5.5rem);
-  line-height: 0.9; /* Corregido para evitar superposición */
-  color: #171717;
-  margin-bottom: 2rem;
+  font-size: clamp(4rem, 8vw, 7rem); /* Grande e impactante */
+  line-height: 0.85;
+  color: #1a1a1a;
+  margin: 0;
   letter-spacing: 1px;
 }
 
 .section-title .highlight {
-  color: transparent;
-  -webkit-text-stroke: 0.5px #0a0a0a;
+  color: #2563eb; /* Azul Tech Profesional (Royal Blue) */
+}
+
+/* El punto final de estilo */
+.section-title .dot {
+  color: #2563eb;
+  display: inline-block;
+}
+
+.mobile-break {
   display: block;
-  margin-top: 5px; /* Un pequeño respiro visual en móvil */
 }
 
 @media (min-width: 1024px) {
-  .section-title .highlight {
-    display: inline;
-    margin-top: 0;
+  .mobile-break {
+    display: none; /* En desktop todo en una línea si cabe */
   }
+}
+
+/* Contenedor del subtítulo con línea decorativa */
+.subtitle-container {
+  position: relative;
 }
 
 .section-subtitle {
   font-family: 'Inter', sans-serif;
-  color: #737373;
-  max-width: 500px;
+  color: #525252;
   font-size: 1.1rem;
   line-height: 1.6;
+  max-width: 450px;
+  font-weight: 400;
+}
+
+@media (min-width: 1024px) {
+  .subtitle-container {
+    padding-left: 2rem;
+    border-left: 1px solid #e5e5e5; /* Línea separadora elegante */
+    margin-bottom: 10px; /* Pequeño ajuste visual */
+  }
+  
+  .section-subtitle {
+    margin: 0;
+  }
 }
 
 /* --- GRID --- */
 .projects-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 3rem;
+  gap: 2.5rem;
 }
 
 @media (min-width: 768px) {
@@ -250,58 +276,59 @@ watch(selectedProject, (val) => {
   }
 }
 
-/* --- CARD --- */
+/* --- CARD DESIGN CLEAN --- */
 .card-wrapper {
-  perspective: 1000px; /* Necesario para el 3D */
+  perspective: 1000px;
   cursor: pointer;
 }
 
 .project-card {
   background: #ffffff;
-  border-radius: 20px;
+  border-radius: 16px; /* Bordes un poco menos redondeados para ser más pro */
   overflow: hidden;
-  box-shadow: 0 10px 40px -10px rgba(0,0,0,0.08); /* Sombra suave de alta calidad */
-  border: 1px solid rgba(0,0,0,0.05);
-  transition: transform 0.1s ease-out, box-shadow 0.3s ease; /* Transición rápida para tilt */
+  /* Sombra difusa estilo moderno */
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
+  border: 1px solid rgba(0,0,0,0.04);
+  transition: transform 0.1s ease-out, box-shadow 0.3s ease, border-color 0.3s ease;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 
 .card-wrapper:hover .project-card {
-  box-shadow: 0 20px 50px -10px rgba(0,0,0,0.15);
-  border-color: rgba(0, 112, 243, 0.2); /* Borde sutil azul al hover */
+  box-shadow: 0 20px 40px -5px rgba(0,0,0,0.08);
+  border-color: rgba(37, 99, 235, 0.2); /* Borde azul muy sutil */
 }
 
-/* Imagen Card */
+/* Imagen */
 .card-image-container {
   position: relative;
-  height: 240px;
+  height: 220px;
   overflow: hidden;
-  background: #f5f5f5;
+  background: #f1f5f9; /* Gris muy claro de fondo */
 }
 
 .card-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); /* Transición premium */
 }
 
 .card-wrapper:hover .card-image {
-  transform: scale(1.1);
+  transform: scale(1.08);
 }
 
 .card-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.3);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
   transition: opacity 0.3s ease;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(4px); /* Blur más fuerte */
 }
 
 .card-wrapper:hover .card-overlay {
@@ -310,13 +337,15 @@ watch(selectedProject, (val) => {
 
 .view-btn {
   background: white;
-  color: black;
-  padding: 0.8rem 1.5rem;
-  border-radius: 30px;
+  color: #1a1a1a;
+  padding: 0.7rem 1.4rem;
+  border-radius: 50px;
   font-weight: 600;
-  font-size: 0.9rem;
-  transform: translateY(20px);
-  transition: transform 0.3s ease;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  transform: translateY(15px);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .card-wrapper:hover .view-btn {
@@ -325,7 +354,7 @@ watch(selectedProject, (val) => {
 
 /* Contenido Card */
 .card-content {
-  padding: 1.5rem;
+  padding: 1.8rem;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -335,35 +364,51 @@ watch(selectedProject, (val) => {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
 }
 
 .card-title {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   font-weight: 700;
-  color: #171717;
+  color: #1a1a1a;
+  line-height: 1.2;
+}
+
+.icon-box {
+  background: #f3f4f6;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.card-wrapper:hover .icon-box {
+  background: #2563eb;
 }
 
 .arrow-icon {
-  color: #d4d4d4;
-  transition: color 0.3s, transform 0.3s;
+  color: #9ca3af;
+  transition: color 0.3s ease;
 }
 
 .card-wrapper:hover .arrow-icon {
-  color: #0070f3;
-  transform: translate(3px, -3px);
+  color: white;
 }
 
 .card-desc {
   font-family: 'Inter', sans-serif;
   font-size: 0.95rem;
-  color: #737373;
+  color: #64748b; /* Slate 500 */
   line-height: 1.5;
   margin-bottom: 1.5rem;
   flex-grow: 1;
 }
 
+/* Tags Minimalistas */
 .card-tags {
   display: flex;
   flex-wrap: wrap;
@@ -371,67 +416,75 @@ watch(selectedProject, (val) => {
 }
 
 .tech-tag {
-  background: #f3f4f6;
-  color: #4b5563;
-  font-size: 0.75rem;
-  padding: 0.3rem 0.8rem;
-  border-radius: 6px;
-  font-weight: 600;
+  background: transparent;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  font-size: 0.7rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 4px;
+  font-weight: 500;
   font-family: 'Space Grotesk', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .tech-tag.more {
-  background: white;
-  border: 1px solid #e5e5e5;
+  background: #f8fafc;
+  color: #94a3b8;
+  border: none;
 }
 
-/* --- MODAL --- */
+/* --- MODAL (Estilo Apple/Clean) --- */
 .modal-backdrop {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px); /* Efecto vidrio moderno */
-  z-index: 1000;
+  background: rgba(255, 255, 255, 0.8); /* Fondo blanco translúcido */
+  backdrop-filter: blur(12px);
+  z-index: 2000;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: 1.5rem;
 }
 
 .modal-container {
-  background: white;
+  background: #ffffff;
   width: 100%;
-  max-width: 1000px;
+  max-width: 950px;
+  height: auto;
   max-height: 90vh;
   overflow-y: auto;
-  border-radius: 24px;
+  border-radius: 20px;
   position: relative;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  /* Sombra profunda y elegante */
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0,0,0,0.05);
 }
 
 .close-btn {
   position: absolute;
   top: 1.5rem;
   right: 1.5rem;
-  background: rgba(255,255,255,0.9);
-  border: none;
-  width: 40px;
-  height: 40px;
+  background: white;
+  border: 1px solid #f1f5f9;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 10;
-  transition: background 0.2s;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: all 0.2s;
+  color: #64748b;
 }
 
 .close-btn:hover {
-  background: #f5f5f5;
+  background: #f8fafc;
+  color: #1a1a1a;
+  transform: rotate(90deg);
 }
 
 .modal-body {
@@ -442,20 +495,21 @@ watch(selectedProject, (val) => {
 @media (min-width: 768px) {
   .modal-body {
     flex-direction: row;
-    height: 600px; /* Altura fija en desktop para diseño split */
+    min-height: 500px;
   }
 }
 
 .modal-visual {
   width: 100%;
-  height: 300px;
-  background: #f5f5f5;
+  height: 250px;
+  background: #f8fafc;
 }
 
 @media (min-width: 768px) {
   .modal-visual {
-    width: 55%;
-    height: 100%;
+    width: 50%;
+    height: auto;
+    border-right: 1px solid #f1f5f9;
   }
 }
 
@@ -466,7 +520,7 @@ watch(selectedProject, (val) => {
 }
 
 .modal-info {
-  padding: 2rem;
+  padding: 2.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -475,17 +529,18 @@ watch(selectedProject, (val) => {
 
 @media (min-width: 768px) {
   .modal-info {
-    width: 45%;
-    padding: 3rem;
+    width: 50%;
+    padding: 3.5rem 3rem;
   }
 }
 
 .modal-title {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: 700;
   line-height: 1.1;
   margin-bottom: 1rem;
+  color: #0f172a;
 }
 
 .modal-tags-list {
@@ -496,17 +551,19 @@ watch(selectedProject, (val) => {
 }
 
 .modal-tag {
-  border: 1px solid #e5e5e5;
-  padding: 0.4rem 1rem;
-  border-radius: 50px;
-  font-size: 0.8rem;
-  color: #525252;
+  background: #f1f5f9;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: #475569;
+  font-weight: 600;
+  font-family: 'Space Grotesk', monospace;
 }
 
 .modal-description {
   font-family: 'Inter', sans-serif;
-  line-height: 1.7;
-  color: #525252;
+  line-height: 1.8;
+  color: #475569;
   font-size: 1rem;
 }
 
@@ -514,25 +571,27 @@ watch(selectedProject, (val) => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  background: #000;
+  gap: 0.6rem;
+  background: #0f172a; /* Slate 900 */
   color: white;
   text-decoration: none;
   padding: 1rem 2rem;
-  border-radius: 12px;
+  border-radius: 8px; /* Botón un poco más cuadrado = más tech */
   font-weight: 600;
-  transition: transform 0.2s, background 0.2s;
+  transition: all 0.2s;
+  align-self: flex-start;
 }
 
 .launch-btn:hover {
-  background: #1a1a1a;
+  background: #1e293b;
   transform: translateY(-2px);
+  box-shadow: 0 10px 20px -5px rgba(15, 23, 42, 0.15);
 }
 
-/* Transiciones de Vue */
+/* Transiciones */
 .modal-fade-enter-active,
 .modal-fade-leave-active {
-  transition: opacity 0.3s ease;
+  transition: opacity 0.2s ease;
 }
 
 .modal-fade-enter-from,
@@ -541,21 +600,15 @@ watch(selectedProject, (val) => {
 }
 
 .modal-fade-enter-active .modal-container {
-  animation: modal-slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: modal-pop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .modal-fade-leave-active .modal-container {
-  animation: modal-slide-up 0.3s cubic-bezier(0.16, 1, 0.3, 1) reverse;
+  animation: modal-pop 0.2s cubic-bezier(0.16, 1, 0.3, 1) reverse;
 }
 
-@keyframes modal-slide-up {
-  from {
-    transform: translateY(40px) scale(0.95);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
+@keyframes modal-pop {
+  from { transform: scale(0.96); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 </style>

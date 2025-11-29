@@ -72,6 +72,7 @@ const isScrolled = ref(false)
 const menuItems = [
   { id: 'inicio', label: 'Inicio' },
   { id: 'nosotros', label: 'Nosotros' },
+  { id: 'servicios', label: 'Servicios' },
   { id: 'proyectos', label: 'Proyectos' }
 ]
 
@@ -181,6 +182,17 @@ onBeforeUnmount(() => {
   height: 4rem;
 }
 
+/* Mobile: altura reducida */
+@media (max-width: 767px) {
+  .nav-content {
+    height: 3.5rem;
+  }
+  
+  .nav.scrolled .nav-content {
+    height: 3.5rem;
+  }
+}
+
 .logo {
   flex-shrink: 0;
 }
@@ -199,6 +211,17 @@ onBeforeUnmount(() => {
 
 .nav.scrolled .logo-img {
   height: 40px;
+}
+
+/* Mobile: logo más pequeño */
+@media (max-width: 767px) {
+  .logo-img {
+    height: 32px;
+  }
+  
+  .nav.scrolled .logo-img {
+    height: 32px;
+  }
 }
 
 .logo-img:hover {
@@ -303,12 +326,12 @@ onBeforeUnmount(() => {
 /* ===== BOTÓN HAMBURGER ANIMADO ===== */
 .mobile-menu-btn {
   display: block;
-  padding: 0.75rem;
+  padding: 0.5rem;
   background: none;
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
-  border-radius: 8px;
+  border-radius: 6px;
   position: relative;
   z-index: 51;
 }
@@ -328,10 +351,10 @@ onBeforeUnmount(() => {
   }
 }
 
-/* Hamburger animado */
+/* Hamburger animado - versión mobile más pequeña */
 .hamburger-box {
-  width: 28px;
-  height: 20px;
+  width: 24px;
+  height: 18px;
   display: inline-block;
   position: relative;
 }
@@ -345,10 +368,10 @@ onBeforeUnmount(() => {
 .hamburger-inner,
 .hamburger-inner::before,
 .hamburger-inner::after {
-  width: 28px;
-  height: 3px;
+  width: 24px;
+  height: 2.5px;
   background: linear-gradient(90deg, #FF0000, #FF00C8);
-  border-radius: 3px;
+  border-radius: 2.5px;
   position: absolute;
   transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
               background 0.3s ease,
@@ -362,14 +385,14 @@ onBeforeUnmount(() => {
 }
 
 .hamburger-inner::before {
-  top: -8px;
+  top: -7px;
   transition: top 0.3s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
               transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
               opacity 0.3s ease;
 }
 
 .hamburger-inner::after {
-  bottom: -8px;
+  bottom: -7px;
   transition: bottom 0.3s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
               transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
               opacity 0.3s ease;
@@ -422,11 +445,21 @@ onBeforeUnmount(() => {
   background: rgba(0, 0, 0, 0.4);
   z-index: 40;
   backdrop-filter: blur(2px);
-  transition: top 0.3s ease;
 }
 
 .nav.scrolled ~ .mobile-overlay {
   top: 4rem;
+}
+
+/* Mobile: ajustar overlay a nueva altura */
+@media (max-width: 767px) {
+  .mobile-overlay {
+    top: 3.5rem;
+  }
+  
+  .nav.scrolled ~ .mobile-overlay {
+    top: 3.5rem;
+  }
 }
 
 .mobile-menu {
@@ -439,18 +472,22 @@ onBeforeUnmount(() => {
   border-bottom: 1px solid rgba(255, 0, 200, 0.15);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   z-index: 45;
-  transition: top 0.3s ease;
-}
-
-/* Mobile: menú con fondo blanco sólido */
-@media (max-width: 767px) {
-  .mobile-menu {
-    background: rgb(255, 255, 255);
-  }
 }
 
 .nav.scrolled .mobile-menu {
   top: 4rem;
+}
+
+/* Mobile: menú ajustado a nueva altura y fondo sólido */
+@media (max-width: 767px) {
+  .mobile-menu {
+    background: rgb(255, 255, 255);
+    top: 3.5rem;
+  }
+  
+  .nav.scrolled .mobile-menu {
+    top: 3.5rem;
+  }
 }
 
 @media (min-width: 768px) {
@@ -460,10 +497,10 @@ onBeforeUnmount(() => {
 }
 
 .mobile-menu-content {
-  padding: 1.5rem 1rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.25rem;
   max-width: 1280px;
   margin: 0 auto;
 }
@@ -471,13 +508,13 @@ onBeforeUnmount(() => {
 .mobile-menu-link {
   font-family: 'Inter', sans-serif;
   display: block;
-  font-size: 0.938rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: #1a1a1a;
   text-decoration: none;
-  padding: 0.875rem 1rem;
+  padding: 0.75rem 1rem;
   transition: all 0.3s ease;
-  border-radius: 8px;
+  border-radius: 6px;
   letter-spacing: 0.01em;
   position: relative;
   overflow: hidden;
@@ -508,8 +545,9 @@ onBeforeUnmount(() => {
 
 .btn-full {
   width: 100%;
-  margin-top: 1rem;
-  padding: 0.875rem 1.75rem;
+  margin-top: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
 }
 
 /* Animación suave para el menú mobile */

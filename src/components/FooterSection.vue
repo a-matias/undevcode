@@ -6,9 +6,23 @@
       
       <div class="footer-cta">
         <span class="cta-label">¿Tenés una idea?</span>
-        <a href="mailto:contacto@undevcode.com" class="cta-title">
+        <a href="https://wa.me/5491170605577" target="_blank" class="cta-title">
           HABLEMOS
-          <span class="arrow-icon">↗</span>
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            width="48" 
+            height="48" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            stroke-width="2" 
+            stroke-linecap="round" 
+            stroke-linejoin="round" 
+            class="whatsapp-icon"
+          >
+            <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21" />
+            <path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1" />
+          </svg>
         </a>
       </div>
 
@@ -16,7 +30,7 @@
         
         <div class="grid-item brand-box">
           <div class="brand-header">
-            <img src="/logo.svg" alt="UnDevCode" class="footer-logo" />
+            <img src="/logo-white.svg" alt="UnDevCode" class="footer-logo" />
             <div class="status-badge">
               <span class="status-dot"></span>
               Disponible para proyectos
@@ -49,14 +63,36 @@
         </div>
 
         <div class="grid-item contact-box">
-          <h5 class="box-title">Conectar</h5>
+          <h5 class="box-title">Escribinos</h5>
           
-          <button @click="copyEmail" class="copy-email-btn" :class="{ 'copied': emailCopied }">
-            <span class="email-text">contacto@undevcode.com</span>
-            <span class="copy-icon">
-              {{ emailCopied ? 'Copiado!' : 'Copiar' }}
-            </span>
-          </button>
+          <form @submit.prevent="submitForm" class="mini-form">
+            <div class="input-group">
+              <input 
+                type="email" 
+                v-model="form.email" 
+                placeholder="tu@email.com" 
+                required 
+                class="form-input"
+              />
+            </div>
+            <div class="input-group">
+              <textarea 
+                v-model="form.message" 
+                placeholder="Breve descripción..." 
+                rows="2" 
+                class="form-input form-textarea"
+              ></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn" :disabled="loading">
+              <span v-if="!loading">Enviar Mensaje</span>
+              <span v-else>Enviando...</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+          </form>
 
           <div class="social-links">
             <a href="#" class="social-pill">LinkedIn</a>
@@ -84,20 +120,31 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, reactive } from 'vue'
 
 const currentYear = new Date().getFullYear()
-const emailCopied = ref(false)
 const timeString = ref('')
+const loading = ref(false)
 let timeInterval = null
 
-// Función para copiar email
-const copyEmail = () => {
-  navigator.clipboard.writeText('info@undevcode.com')
-  emailCopied.value = true
+// Estado del formulario
+const form = reactive({
+  email: '',
+  message: ''
+})
+
+// Lógica de envío simulada
+const submitForm = async () => {
+  loading.value = true
+  // Aquí iría tu llamada a la API (ej. Formspree, EmailJS o tu backend)
+  console.log('Enviando formulario:', form)
+  
   setTimeout(() => {
-    emailCopied.value = false
-  }, 2000)
+    loading.value = false
+    alert('Mensaje enviado (Simulación)')
+    form.email = ''
+    form.message = ''
+  }, 1500)
 }
 
 // Función para el reloj en vivo (Zona horaria Argentina)
@@ -123,12 +170,10 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* Importamos fuentes modernas */
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap');
 
-/* --- VARIABLES --- */
+/* --- ESTRUCTURA GENERAL --- */
 .footer-wrapper {
-  /* Fondo oscuro para continuidad con tu Hero */
   background-color: #050507; 
   color: #ffffff;
   position: relative;
@@ -138,7 +183,6 @@ onUnmounted(() => {
   padding-top: 4rem;
 }
 
-/* --- SEPARADOR GLOW --- */
 .glow-separator {
   position: absolute;
   top: 0;
@@ -158,7 +202,7 @@ onUnmounted(() => {
   gap: 4rem;
 }
 
-/* --- 1. CTA SECTION --- */
+/* --- 1. CTA SECTION (WHATSAPP) --- */
 .footer-cta {
   display: flex;
   flex-direction: column;
@@ -178,49 +222,52 @@ onUnmounted(() => {
 
 .cta-title {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(3rem, 10vw, 8rem); /* Texto responsivo gigante */
+  font-size: clamp(3rem, 10vw, 8rem);
   font-weight: 700;
   line-height: 1;
   color: #fff;
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem; /* Separación entre texto e ícono */
   transition: all 0.4s ease;
   cursor: pointer;
 }
 
+/* Efectos Hover del CTA */
 .cta-title:hover {
-  /* Efecto gradiente en texto */
-  background: linear-gradient(90deg, #fff, #ff00c8);
+  background: linear-gradient(90deg, #fff, #25D366); /* Verde WhatsApp */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   transform: translateX(10px);
 }
 
-.arrow-icon {
-  font-size: 0.5em;
-  opacity: 0.5;
-  transition: transform 0.4s ease;
+.whatsapp-icon {
+  width: clamp(40px, 8vw, 80px); /* Ícono responsivo */
+  height: clamp(40px, 8vw, 80px);
+  color: #fff; /* Por defecto blanco */
+  transition: transform 0.4s ease, color 0.4s ease;
+  stroke-width: 1.5px;
 }
 
-.cta-title:hover .arrow-icon {
-  transform: translate(10px, -10px);
-  opacity: 1;
-  color: #ff00c8;
-  -webkit-text-fill-color: #ff00c8; /* Reset para el icono */
+/* Al hacer hover, el ícono recupera su color */
+.cta-title:hover .whatsapp-icon {
+  color: #25D366; 
+  -webkit-text-fill-color: #25D366; /* Reset para evitar que herede el transparente */
+  transform: rotate(-15deg) scale(1.1);
 }
 
-/* --- 2. BENTO GRID --- */
+/* --- 2. GRID LAYOUT --- */
 .footer-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 2rem;
+  gap: 3rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 900px) {
   .footer-grid {
-    grid-template-columns: 2fr 1fr 1fr 1.5fr; /* Layout asimétrico moderno */
+    /* Ajusté el ancho de la última columna para el formulario */
+    grid-template-columns: 2fr 1fr 1fr 2fr; 
   }
 }
 
@@ -243,7 +290,6 @@ onUnmounted(() => {
 .footer-logo {
   height: 32px;
   width: auto;
-  filter: brightness(100); /* Logo blanco */
 }
 
 .brand-header {
@@ -298,7 +344,7 @@ onUnmounted(() => {
 }
 
 .tech-list li {
-  color: #a1a1aa; /* Un poco más apagado para ítems no clickeables */
+  color: #a1a1aa;
 }
 
 .nav-link:hover {
@@ -323,43 +369,73 @@ onUnmounted(() => {
   opacity: 1;
 }
 
-/* Contacto Interactivo */
-.copy-email-btn {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 0.75rem 1rem;
+/* --- FORMULARIO ESTILO TECH --- */
+.mini-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  background: rgba(255,255,255,0.02);
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.form-input {
+  width: 100%;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
   border-radius: 8px;
+  padding: 0.8rem 1rem;
   color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #ff00c8;
+  background: rgba(255, 0, 200, 0.05);
+  box-shadow: 0 0 15px rgba(255, 0, 200, 0.1);
+}
+
+.form-textarea {
+  resize: none;
+}
+
+.submit-btn {
+  background: #fff;
+  color: #000;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 8px;
+  font-weight: 600;
   cursor: pointer;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  transition: all 0.3s ease;
-  font-family: 'Space Grotesk', monospace;
-  width: 100%;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
-.copy-email-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.3);
+.submit-btn:hover {
+  background: #ff00c8;
+  color: white;
+  transform: translateY(-2px);
 }
 
-.copy-email-btn.copied {
-  background: rgba(16, 185, 129, 0.1);
-  border-color: #34d399;
-  color: #34d399;
-}
-
-.copy-icon {
-  font-size: 0.75rem;
-  text-transform: uppercase;
+.submit-btn:disabled {
   opacity: 0.7;
+  cursor: not-allowed;
 }
 
+/* Social Links */
 .social-links {
   display: flex;
   gap: 0.75rem;
   flex-wrap: wrap;
+  margin-top: 0.5rem;
 }
 
 .social-pill {
@@ -417,7 +493,7 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   gap: 1rem;
-  font-family: 'Space Grotesk', monospace; /* Look técnico */
+  font-family: 'Space Grotesk', monospace;
   background: rgba(0,0,0,0.3);
   padding: 0.3rem 0.8rem;
   border-radius: 4px;
