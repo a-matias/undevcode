@@ -6,8 +6,8 @@
         <div class="title-container">
           <h2 class="section-title">
             NUESTRO <br class="mobile-break" />
-            <span class="highlight">TRABAJO</span><span class="dot">.</span>
-          </h2>
+            <span class="highlight">TRABAJO</span><span class="dot"></span>
+          .</h2>
         </div>
         
         <div class="subtitle-container">
@@ -50,8 +50,15 @@
               
               <div class="card-tags">
                 <span v-for="tag in project.tags.slice(0, 3)" :key="tag" class="tech-tag">
+                  <img 
+                    v-if="getIconUrl(tag)" 
+                    :src="getIconUrl(tag)" 
+                    :alt="tag" 
+                    class="tag-icon" 
+                  />
                   {{ tag }}
                 </span>
+                
                 <span v-if="project.tags.length > 3" class="tech-tag more">
                   +{{ project.tags.length - 3 }}
                 </span>
@@ -80,11 +87,19 @@
             <div class="modal-info">
               <div class="info-top">
                 <h2 class="modal-title">{{ projects[selectedProject].name }}</h2>
+                
                 <div class="modal-tags-list">
                   <span v-for="tag in projects[selectedProject].tags" :key="tag" class="modal-tag">
+                    <img 
+                      v-if="getIconUrl(tag)" 
+                      :src="getIconUrl(tag)" 
+                      :alt="tag" 
+                      class="tag-icon" 
+                    />
                     {{ tag }}
                   </span>
                 </div>
+                
                 <p class="modal-description">
                   {{ projects[selectedProject].fullDescription }}
                 </p>
@@ -110,12 +125,33 @@ import { ref, watch } from 'vue';
 const selectedProject = ref(null);
 const hoveredIndex = ref(null);
 
+// Mapeo de nombres "humanos" a slugs de SimpleIcons
+const iconSlugMap = {
+  'Vue.js': 'vuedotjs',         // https://simpleicons.org/icons/vue.svg
+  'Node.js': 'nodedotjs',  
+  'Firebase': 'firebase',
+  'MySQL': 'mysql',
+  'Laravel': 'laravel',
+  'Bootstrap': 'bootstrap',
+  'AWS S3': 'bitbucket',    // Especifico para S3
+  'React': 'react',
+  'Next.js': 'nextdotjs'
+};
+
+// Función helper para obtener la URL
+const getIconUrl = (tagName) => {
+  const slug = iconSlugMap[tagName];
+  if (!slug) return null;
+  // cdn.simpleicons.org devuelve el SVG con el color oficial de la marca por defecto
+  return `https://cdn.simpleicons.org/${slug}`;
+};
+
 // Datos Simulados
 const projects = [
   {
     name: 'FlexiTaim',
-    shortDescription: 'Gestión de turnos inteligente con pagos QR automatizados.',
-    fullDescription: 'FlexiTaim revoluciona la gestión de reservas permitiendo a los negocios automatizar su calendario. Incluye recordatorios por WhatsApp, pagos integrados con MercadoPago y un panel de administración en tiempo real.',
+    shortDescription: 'Gestión de turnos inteligente con Servicio de Notificación QR automatizados.',
+    fullDescription: 'FlexiTaim revoluciona la gestión de reservas permitiendo a los negocios automatizar su calendario. Incluye recordatorios por WhatsApp y un panel de administración en tiempo real.',
     image: '/project-flexitaim.svg', 
     tags: ['Vue.js', 'Node.js', 'Firebase', 'MySQL'],
     link: 'https://flexitaim.com'
@@ -133,7 +169,7 @@ const projects = [
     shortDescription: 'Sistema de reservas gastronómicas de alta demanda.',
     fullDescription: 'Diseñado para restaurantes de alto tráfico, ToppinFly gestiona mesas, listas de espera y pedidos anticipados para reducir el tiempo de rotación de mesas y mejorar la experiencia del comensal.',
     image: '/project-toppingfly.svg',
-    tags: ['React', 'Next.js', 'Firebase', 'AWS S3'],
+    tags: ['React', 'Node.js', 'MySQL' ,'AWS S3'],
     link: '#'
   }
 ];
@@ -175,8 +211,8 @@ watch(selectedProject, (val) => {
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@300;400;500;600&family=Bebas+Neue&display=swap');
 
 .projects-section {
-  padding: 8rem 1.5rem; /* Más aire arriba y abajo */
-  background-color: #fcfcfc; /* Un blanco técnico muy sutil */
+  padding: 5.5rem 1.5rem;
+  background-color: #fcfcfc;
   color: #1a1a1a;
 }
 
@@ -185,7 +221,7 @@ watch(selectedProject, (val) => {
   margin: 0 auto;
 }
 
-/* --- HEADER MINIMALISTA & PROFESIONAL --- */
+/* HEADER */
 .section-header {
   margin-bottom: 6rem;
   display: flex;
@@ -196,7 +232,6 @@ watch(selectedProject, (val) => {
 @media (min-width: 1024px) {
   .section-header {
     flex-direction: row;
-    /* CLAVE: Alineamos al final para que la base del texto coincida */
     align-items: flex-end; 
     justify-content: space-between;
   }
@@ -204,7 +239,7 @@ watch(selectedProject, (val) => {
 
 .section-title {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(4rem, 8vw, 7rem); /* Grande e impactante */
+  font-size: clamp(4rem, 8vw, 7rem);
   line-height: 0.85;
   color: #1a1a1a;
   margin: 0;
@@ -212,10 +247,9 @@ watch(selectedProject, (val) => {
 }
 
 .section-title .highlight {
-  color: #2563eb; /* Azul Tech Profesional (Royal Blue) */
+  color: #2563eb;
 }
 
-/* El punto final de estilo */
 .section-title .dot {
   color: #2563eb;
   display: inline-block;
@@ -227,11 +261,10 @@ watch(selectedProject, (val) => {
 
 @media (min-width: 1024px) {
   .mobile-break {
-    display: none; /* En desktop todo en una línea si cabe */
+    display: none;
   }
 }
 
-/* Contenedor del subtítulo con línea decorativa */
 .subtitle-container {
   position: relative;
 }
@@ -248,16 +281,15 @@ watch(selectedProject, (val) => {
 @media (min-width: 1024px) {
   .subtitle-container {
     padding-left: 2rem;
-    border-left: 1px solid #e5e5e5; /* Línea separadora elegante */
-    margin-bottom: 10px; /* Pequeño ajuste visual */
+    border-left: 1px solid #e5e5e5;
+    margin-bottom: 10px;
   }
-  
   .section-subtitle {
     margin: 0;
   }
 }
 
-/* --- GRID --- */
+/* GRID */
 .projects-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -276,7 +308,7 @@ watch(selectedProject, (val) => {
   }
 }
 
-/* --- CARD DESIGN CLEAN --- */
+/* CARD */
 .card-wrapper {
   perspective: 1000px;
   cursor: pointer;
@@ -284,35 +316,34 @@ watch(selectedProject, (val) => {
 
 .project-card {
   background: #ffffff;
-  border-radius: 16px; /* Bordes un poco menos redondeados para ser más pro */
+  border-radius: 14px;
   overflow: hidden;
-  /* Sombra difusa estilo moderno */
   box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
   border: 1px solid rgba(0,0,0,0.04);
   transition: transform 0.1s ease-out, box-shadow 0.3s ease, border-color 0.3s ease;
   height: 100%;
+  width: 22vw;
   display: flex;
   flex-direction: column;
 }
 
 .card-wrapper:hover .project-card {
   box-shadow: 0 20px 40px -5px rgba(0,0,0,0.08);
-  border-color: rgba(37, 99, 235, 0.2); /* Borde azul muy sutil */
+  border-color: rgba(37, 99, 235, 0.2);
 }
 
-/* Imagen */
 .card-image-container {
   position: relative;
   height: 220px;
   overflow: hidden;
-  background: #f1f5f9; /* Gris muy claro de fondo */
+  background: #f1f5f9;
 }
 
 .card-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); /* Transición premium */
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .card-wrapper:hover .card-image {
@@ -328,7 +359,7 @@ watch(selectedProject, (val) => {
   justify-content: center;
   opacity: 0;
   transition: opacity 0.3s ease;
-  backdrop-filter: blur(4px); /* Blur más fuerte */
+  backdrop-filter: blur(4px);
 }
 
 .card-wrapper:hover .card-overlay {
@@ -352,7 +383,6 @@ watch(selectedProject, (val) => {
   transform: translateY(0);
 }
 
-/* Contenido Card */
 .card-content {
   padding: 1.8rem;
   flex-grow: 1;
@@ -402,13 +432,13 @@ watch(selectedProject, (val) => {
 .card-desc {
   font-family: 'Inter', sans-serif;
   font-size: 0.95rem;
-  color: #64748b; /* Slate 500 */
+  color: #64748b;
   line-height: 1.5;
   margin-bottom: 1.5rem;
   flex-grow: 1;
 }
 
-/* Tags Minimalistas */
+/* TAGS CON IMAGENES SVG */
 .card-tags {
   display: flex;
   flex-wrap: wrap;
@@ -422,26 +452,39 @@ watch(selectedProject, (val) => {
   font-size: 0.7rem;
   padding: 0.25rem 0.7rem;
   border-radius: 4px;
-  font-weight: 500;
+  font-weight: 600;
   font-family: 'Space Grotesk', monospace;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Estilo de la imagen dentro del tag */
+.tag-icon {
+  width: 14px;
+  height: 14px;
+  object-fit: contain; /* Asegura que el logo no se deforme */
+  display: block;
 }
 
 .tech-tag.more {
   background: #f8fafc;
   color: #94a3b8;
   border: none;
+  padding-left: 0.8rem;
 }
 
-/* --- MODAL (Estilo Apple/Clean) --- */
+/* MODAL */
 .modal-backdrop {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.8); /* Fondo blanco translúcido */
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(12px);
   z-index: 2000;
   display: flex;
@@ -459,7 +502,6 @@ watch(selectedProject, (val) => {
   overflow-y: auto;
   border-radius: 20px;
   position: relative;
-  /* Sombra profunda y elegante */
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0,0,0,0.05);
 }
 
@@ -543,6 +585,7 @@ watch(selectedProject, (val) => {
   color: #0f172a;
 }
 
+/* Tags del Modal */
 .modal-tags-list {
   display: flex;
   flex-wrap: wrap;
@@ -558,6 +601,10 @@ watch(selectedProject, (val) => {
   color: #475569;
   font-weight: 600;
   font-family: 'Space Grotesk', monospace;
+  
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .modal-description {
@@ -572,11 +619,11 @@ watch(selectedProject, (val) => {
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  background: #0f172a; /* Slate 900 */
+  background: #0f172a;
   color: white;
   text-decoration: none;
   padding: 1rem 2rem;
-  border-radius: 8px; /* Botón un poco más cuadrado = más tech */
+  border-radius: 8px;
   font-weight: 600;
   transition: all 0.2s;
   align-self: flex-start;
