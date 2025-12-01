@@ -1,5 +1,5 @@
-<template>
-  <footer class="footer-wrapper">
+<template >
+  <footer id="footer" class="footer-wrapper" v-scroll-reveal>
     <div class="glow-separator"></div>
 
     <div class="footer-container">

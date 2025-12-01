@@ -1,12 +1,12 @@
 <template>
-  <section id="proyectos" class="projects-section">
+  <section id="proyectos" class="projects-section"  v-scroll-reveal>
     <div class="projects-container">
       
       <div class="section-header">
         <div class="title-container">
           <h2 class="section-title">
-            NUESTRO <br class="mobile-break" />
-            <span class="highlight">TRABAJO</span><span class="dot"></span>
+            ALGUNOS DE NUESTROS <br class="mobile-break" />
+            <span class="highlight">TRABAJOS</span>
           .</h2>
         </div>
         
@@ -207,7 +207,7 @@ watch(selectedProject, (val) => {
 </script>
 
 <style scoped>
-/* FUENTES */
+
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@300;400;500;600&family=Bebas+Neue&display=swap');
 
 .projects-section {
@@ -248,11 +248,6 @@ watch(selectedProject, (val) => {
 
 .section-title .highlight {
   color: #2563eb;
-}
-
-.section-title .dot {
-  color: #2563eb;
-  display: inline-block;
 }
 
 .mobile-break {
@@ -300,362 +295,234 @@ watch(selectedProject, (val) => {
   .projects-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
 }
 
 @media (min-width: 1280px) {
   .projects-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+  
 }
 
 /* CARD */
+/* ============================================
+   🖥️ ESTILOS DESKTOP (DEFAULT)
+   ============================================ */
+
+.projects-section {
+  padding: 4rem 0;
+}
+
+.projects-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
 .card-wrapper {
   perspective: 1000px;
-  cursor: pointer;
 }
 
 .project-card {
-  background: #ffffff;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
-  border: 1px solid rgba(0,0,0,0.04);
-  transition: transform 0.1s ease-out, box-shadow 0.3s ease, border-color 0.3s ease;
-  height: 100%;
   width: 22vw;
-  display: flex;
-  flex-direction: column;
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  transition: transform 0.4s ease;
+  cursor: pointer;
 }
 
-.card-wrapper:hover .project-card {
-  box-shadow: 0 20px 40px -5px rgba(0,0,0,0.08);
-  border-color: rgba(37, 99, 235, 0.2);
+.project-card:hover {
+  transform: translateY(-8px);
 }
 
 .card-image-container {
-  position: relative;
+  width: 100%;
   height: 220px;
   overflow: hidden;
-  background: #f1f5f9;
 }
 
 .card-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform 0.4s ease;
 }
 
-.card-wrapper:hover .card-image {
+.project-card:hover .card-image {
   transform: scale(1.08);
 }
 
-.card-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  backdrop-filter: blur(4px);
-}
-
-.card-wrapper:hover .card-overlay {
-  opacity: 1;
-}
-
-.view-btn {
-  background: white;
-  color: #1a1a1a;
-  padding: 0.7rem 1.4rem;
-  border-radius: 50px;
-  font-weight: 600;
-  font-size: 0.85rem;
-  letter-spacing: 0.5px;
-  transform: translateY(15px);
-  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.card-wrapper:hover .view-btn {
-  transform: translateY(0);
-}
-
 .card-content {
-  padding: 1.8rem;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.card-header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 0.8rem;
+  padding: 1.6rem;
 }
 
 .card-title {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.35rem;
+  font-size: 1.6rem;
+  margin-bottom: 0.6rem;
   font-weight: 700;
-  color: #1a1a1a;
-  line-height: 1.2;
-}
-
-.icon-box {
-  background: #f3f4f6;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.3s ease;
-}
-
-.card-wrapper:hover .icon-box {
-  background: #2563eb;
-}
-
-.arrow-icon {
-  color: #9ca3af;
-  transition: color 0.3s ease;
-}
-
-.card-wrapper:hover .arrow-icon {
-  color: white;
 }
 
 .card-desc {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.95rem;
-  color: #64748b;
-  line-height: 1.5;
-  margin-bottom: 1.5rem;
-  flex-grow: 1;
+  font-size: 1rem;
+  color: #444;
+  line-height: 1.45;
+  margin-bottom: 1rem;
 }
 
-/* TAGS CON IMAGENES SVG */
 .card-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.6rem;
 }
 
 .tech-tag {
-  background: transparent;
-  border: 1px solid #e2e8f0;
-  color: #475569;
-  font-size: 0.7rem;
-  padding: 0.25rem 0.7rem;
-  border-radius: 4px;
-  font-weight: 600;
-  font-family: 'Space Grotesk', monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  
+  background: #f3f3f3;
+  color: #222;
+  padding: 0.3rem 0.7rem;
+  border-radius: 10px;
+  font-size: 0.8rem;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.3rem;
 }
 
-/* Estilo de la imagen dentro del tag */
 .tag-icon {
   width: 14px;
   height: 14px;
-  object-fit: contain; /* Asegura que el logo no se deforme */
-  display: block;
 }
 
-.tech-tag.more {
-  background: #f8fafc;
-  color: #94a3b8;
-  border: none;
-  padding-left: 0.8rem;
-}
 
-/* MODAL */
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(12px);
-  z-index: 2000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-}
 
-.modal-container {
-  background: #ffffff;
-  width: 100%;
-  max-width: 950px;
-  height: auto;
-  max-height: 90vh;
-  overflow-y: auto;
-  border-radius: 20px;
-  position: relative;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0,0,0,0.05);
-}
+/* ==================================================
+   📱 TABLET (768px – 1023px)
+   ================================================== */
 
-.close-btn {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  background: white;
-  border: 1px solid #f1f5f9;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  transition: all 0.2s;
-  color: #64748b;
-}
+@media (min-width: 768px) and (max-width: 1023px) {
 
-.close-btn:hover {
-  background: #f8fafc;
-  color: #1a1a1a;
-  transform: rotate(90deg);
-}
+  .project-card {
+    width: 100%;
+  }
 
-.modal-body {
-  display: flex;
-  flex-direction: column;
-}
+  .card-image-container {
+    height: 200px;
+  }
 
-@media (min-width: 768px) {
-  .modal-body {
-    flex-direction: row;
-    min-height: 500px;
+  .card-title {
+    font-size: 1.4rem;
+  }
+
+  .tech-tag {
+    font-size: 0.75rem;
   }
 }
 
-.modal-visual {
-  width: 100%;
-  height: 250px;
-  background: #f8fafc;
-}
 
-@media (min-width: 768px) {
-  .modal-visual {
-    width: 50%;
-    height: auto;
-    border-right: 1px solid #f1f5f9;
+
+/* ==================================================
+   📱 MOBILE (≤ 767px)
+   ==================================================
+   👉 FÁCIL DE ENCONTRAR — ÚLTIMO BLOQUE
+   ================================================== */
+
+@media (max-width: 767px) {
+
+  /* Contenedor general de la sección */
+  .projects-section {
+    padding: 3rem 1rem;
+  }
+
+  .projects-container {
+    gap: 1.5rem;
+    justify-content: center;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* 1 card por fila */
+    gap: 1.5rem;
+  }
+
+  /* Card Wrapper y Card */
+  .card-wrapper {
+    width: 90%; /* No ocupa el 100% */
+    margin: 0 auto; /* Centrado */
+    perspective: none;
+  }
+
+  .project-card {
+    width: 100%;
+    border-radius: 14px;
+    overflow: hidden;
+    transform: none !important; /* desactivar tilt */
+    transition: transform 0.2s ease;
+  }
+
+  /* Imagen */
+  .card-image-container {
+    height: 160px;
+  }
+
+  .card-image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    transition: none;
+  }
+
+  /* Contenido */
+  .card-content {
+    padding: 1rem 1rem 1.2rem 1rem;
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+  }
+
+  .card-desc {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+  }
+
+  /* Tags */
+  .card-tags {
+    gap: 0.4rem;
+  }
+
+  .tech-tag {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.5rem;
+  }
+
+  .tag-icon {
+    width: 12px;
+    height: 12px;
+  }
+
+  /* Overlay y botón */
+  .card-overlay {
+    opacity: 0; /* quitar hover overlay en mobile */
+  }
+
+  .view-btn {
+    display: none;
+  }
+
+  /* Ajustes header / títulos */
+  .section-title {
+    font-size: 2.5rem;
+    line-height: 1.1;
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
+    line-height: 1.4;
+    max-width: 100%;
   }
 }
 
-.modal-visual img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
 
-.modal-info {
-  padding: 2.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 2rem;
-}
-
-@media (min-width: 768px) {
-  .modal-info {
-    width: 50%;
-    padding: 3.5rem 3rem;
-  }
-}
-
-.modal-title {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 2.2rem;
-  font-weight: 700;
-  line-height: 1.1;
-  margin-bottom: 1rem;
-  color: #0f172a;
-}
-
-/* Tags del Modal */
-.modal-tags-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.modal-tag {
-  background: #f1f5f9;
-  padding: 0.3rem 0.8rem;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  color: #475569;
-  font-weight: 600;
-  font-family: 'Space Grotesk', monospace;
-  
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.modal-description {
-  font-family: 'Inter', sans-serif;
-  line-height: 1.8;
-  color: #475569;
-  font-size: 1rem;
-}
-
-.launch-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  background: #0f172a;
-  color: white;
-  text-decoration: none;
-  padding: 1rem 2rem;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 0.2s;
-  align-self: flex-start;
-}
-
-.launch-btn:hover {
-  background: #1e293b;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px -5px rgba(15, 23, 42, 0.15);
-}
-
-/* Transiciones */
-.modal-fade-enter-active,
-.modal-fade-leave-active {
-  transition: opacity 0.2s ease;
-}
-
-.modal-fade-enter-from,
-.modal-fade-leave-to {
-  opacity: 0;
-}
-
-.modal-fade-enter-active .modal-container {
-  animation: modal-pop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.modal-fade-leave-active .modal-container {
-  animation: modal-pop 0.2s cubic-bezier(0.16, 1, 0.3, 1) reverse;
-}
-
-@keyframes modal-pop {
-  from { transform: scale(0.96); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <section id="nosotros" class="about-section">
+  <section id="nosotros" class="about-section"  v-scroll-reveal="{ distance: '80px', delay: 400 }">
     <div class="background-effects">
       <div class="orb orb-1"></div>
       <div class="orb orb-2"></div>
@@ -47,6 +47,7 @@
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@300;400;500;600&family=Bebas+Neue&display=swap');
 
 /* --- LAYOUT GENERAL --- */
 .about-section {
@@ -215,4 +216,5 @@
     font-size: 2.5rem;
   }
 }
+
 </style>

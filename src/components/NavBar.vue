@@ -20,7 +20,10 @@
           >
             {{ item.label }}
           </a>
-          <button class="btn-primary">
+          <button 
+            class="btn-primary"
+            @click.prevent="scrollToSection('footer')"
+          >
             Contactar
           </button>
         </div>
