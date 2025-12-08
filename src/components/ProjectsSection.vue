@@ -148,25 +148,25 @@ const getIconUrl = (tagName) => {
 const projects = [
   {
     name: 'FlexiTaim',
-    shortDescription: 'Gestión de turnos inteligente con Servicio de Notificación QR.',
-    fullDescription: 'FlexiTaim revoluciona la gestión de reservas permitiendo a los negocios automatizar su calendario. Incluye recordatorios por WhatsApp, pagos integrados mediante API bancaria y un panel de administración en tiempo real con estadísticas de ventas.',
-    image: 'https://placehold.co/800x600/2563eb/white?text=FlexiTaim', 
+    shortDescription: 'Gestión de turnos inteligente con Servicio de Notificación QR automatizados.',
+    fullDescription: 'FlexiTaim revoluciona la gestión de reservas permitiendo a los negocios automatizar su calendario. Incluye recordatorios por WhatsApp y un panel de administración en tiempo real.',
+    image: '/project-flexitaim.svg', 
     tags: ['Vue.js', 'Node.js', 'Firebase', 'MySQL'],
     link: 'https://flexitaim.com'
   },
   {
     name: 'Guía Digital',
     shortDescription: 'Directorio comercial autogestionable con geolocalización.',
-    fullDescription: 'Una plataforma robusta donde los comercios locales pueden crear su presencia digital en minutos. Cuenta con subida de imágenes optimizada, SEO automático, sistema de reviews verificado y panel de control para dueños de negocios.',
-    image: 'https://placehold.co/800x600/10b981/white?text=Guia+Digital',
+    fullDescription: 'Una plataforma robusta donde los comercios locales pueden crear su presencia digital en minutos. Cuenta con subida de imágenes optimizada, SEO automático y sistema de reviews verificado.',
+    image: '/project-guiadigital.svg',
     tags: ['Laravel', 'Bootstrap', 'MySQL', 'AWS S3'],
     link: 'https://guiadigital.com.ar'
   },
   {
     name: 'ToppinFly',
     shortDescription: 'Sistema de reservas gastronómicas de alta demanda.',
-    fullDescription: 'Diseñado para restaurantes de alto tráfico, ToppinFly gestiona mesas, listas de espera y pedidos anticipados. Permite a los comensales ver el menú y pedir antes de sentarse, reduciendo tiempos de espera.',
-    image: 'https://placehold.co/800x600/f59e0b/white?text=ToppinFly',
+    fullDescription: 'Diseñado para restaurantes de alto tráfico, ToppinFly gestiona mesas, listas de espera y pedidos anticipados para reducir el tiempo de rotación de mesas y mejorar la experiencia del comensal.',
+    image: '/project-toppingfly.svg',
     tags: ['React', 'Node.js', 'MySQL' ,'AWS S3'],
     link: '#'
   }
