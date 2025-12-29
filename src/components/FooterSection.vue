@@ -121,6 +121,8 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, reactive } from 'vue'
+import emailjs from '@emailjs/browser'
+import Swal from 'sweetalert2'
 
 const currentYear = new Date().getFullYear()
 const timeString = ref('')
@@ -133,21 +135,65 @@ const form = reactive({
   message: ''
 })
 
-// Lógica de envío simulada
+// ENV (Vite)
+const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
+const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+
+// Envío real del mail
 const submitForm = async () => {
+  if (!form.email || !form.message) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Faltan datos',
+      text: 'Por favor completá el email y el mensaje.',
+      confirmButtonColor: '#ff00c8'
+    })
+    return
+  }
+
   loading.value = true
-  // Aquí iría tu llamada a la API (ej. Formspree, EmailJS o tu backend)
-  console.log('Enviando formulario:', form)
-  
-  setTimeout(() => {
+
+  const templateParams = {
+    from_email: form.email,
+    message: form.message
+  }
+
+  try {
+    const response = await emailjs.send(
+      SERVICE_ID,
+      TEMPLATE_ID,
+      templateParams,
+      PUBLIC_KEY
+    )
+
+    if (response.status === 200) {
+      Swal.fire({
+        icon: 'success',
+        title: '¡Mensaje enviado!',
+        text: 'Gracias por escribirnos, te respondemos a la brevedad 🚀',
+        confirmButtonColor: '#10b981'
+      })
+
+      form.email = ''
+      form.message = ''
+    }
+  } catch (error) {
+    console.error('Error al enviar el correo:', error)
+
+    Swal.fire({
+      icon: 'error',
+      title: 'Ups...',
+      text: 'No pudimos enviar el mensaje. Probá nuevamente en unos minutos.',
+      confirmButtonColor: '#ef4444'
+    })
+  } finally {
     loading.value = false
-    alert('Mensaje enviado (Simulación)')
-    form.email = ''
-    form.message = ''
-  }, 1500)
+  }
 }
 
-// Función para el reloj en vivo (Zona horaria Argentina)
+
+// Reloj en vivo (Argentina)
 const updateTime = () => {
   const options = { 
     timeZone: 'America/Argentina/Buenos_Aires',
@@ -168,6 +214,7 @@ onUnmounted(() => {
   if (timeInterval) clearInterval(timeInterval)
 })
 </script>
+
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap');
