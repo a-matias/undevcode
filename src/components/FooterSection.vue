@@ -79,7 +79,7 @@
               <textarea 
                 v-model="form.message" 
                 placeholder="Breve descripción..." 
-                rows="2" 
+                rows="3" 
                 class="form-input form-textarea"
               ></textarea>
             </div>
@@ -96,8 +96,8 @@
 
           <div class="social-links">
             <a href="#" class="social-pill">LinkedIn</a>
-            <a href="#" class="social-pill">Instagram</a>
-            <a href="#" class="social-pill">GitHub</a>
+            <a href="https://www.instagram.com/undevcode/" class="social-pill" target="_blank">Instagram</a>
+            <a href="https://github.com/undevcode-ok/" class="social-pill" target="_blank">GitHub</a>
           </div>
         </div>
       </div>
