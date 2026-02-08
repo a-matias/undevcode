@@ -133,7 +133,7 @@ const iconSlugMap = {
   'MySQL': 'mysql',
   'Laravel': 'laravel',
   'Bootstrap': 'bootstrap',
-  'AWS S3': 'amazonaws', // Corregido slug de AWS
+  'AWS': 'amazonaws', // Corregido slug de AWS
   'React': 'react',
   'Next.js': 'nextdotjs'
 };
