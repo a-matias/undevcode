@@ -168,7 +168,7 @@ const projects = [
     fullDescription: 'Diseñado para restaurantes de alto tráfico, ToppinFly gestiona mesas, listas de espera y pedidos anticipados para reducir el tiempo de rotación de mesas y mejorar la experiencia del comensal.',
     image: '/project-toppingfly.svg',
     tags: ['React', 'Node.js', 'MySQL' ,'AWS S3'],
-    link: '#'
+    link: 'https://toppingfly.com'
   }
 ];
 
