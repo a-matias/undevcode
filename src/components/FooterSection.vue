@@ -43,7 +43,7 @@
         </div>
 
         <div class="grid-item nav-box">
-          <h5 class="box-title">Explorar</h5>
+          <h3 class="box-title">Explorar</h3>
           <nav class="footer-nav">
             <a href="#inicio" class="nav-link">Inicio</a>
             <a href="#nosotros" class="nav-link">Nosotros</a>
@@ -53,7 +53,7 @@
         </div>
 
         <div class="grid-item services-box">
-          <h5 class="box-title">Expertise</h5>
+          <h3 class="box-title">Expertise</h3>
           <ul class="tech-list">
             <li>Desarrollo Web Full Stack</li>
             <li>Arquitectura Cloud</li>
@@ -63,7 +63,7 @@
         </div>
 
         <div class="grid-item contact-box">
-          <h5 class="box-title">Escribinos</h5>
+          <h3 class="box-title">Escribinos</h3>
           
           <form @submit.prevent="submitForm" class="mini-form">
             <div class="input-group">
