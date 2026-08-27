@@ -104,7 +104,7 @@
 
       <div class="footer-bottom">
         <div class="legal">
-          <span>&copy; {{ currentYear }} UnDevCode Labs.</span>
+          <span>&copy; {{ currentYear }} UnDevCode.</span>
           <a href="#">Privacidad</a>
           <a href="#">Términos</a>
         </div>

@@ -17,7 +17,7 @@
     "@emailjs/browser": "^4.4.1",
     "emailjs": "^5.0.0",
     "lucide-vue-next": "^0.545.0",
-    "sweetalert2": "^11.26.17",
+    "sweetalert2": "^11.26.25",
     "vue": "^3.5.22",
     "vue-router": "^4.5.1"
   },

@@ -11,7 +11,7 @@
 
         <div class="text-content">
           <div class="badge-wrapper fade-in-1">
-            <span class="badge">Innovation Lab 2025</span>
+            <span class="badge">Innovation Lab 2026</span>
           </div>
 
           <h1 class="hero-title fade-in-2">
