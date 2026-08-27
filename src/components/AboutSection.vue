@@ -16,33 +16,37 @@
           SOMOS UNDEVCODE
           <span class="dot">.</span>
         </h2>
-        
+
         <div class="text-body">
           <p class="highlight-paragraph">
             Donde las ideas se convierten en soluciones digitales.
           </p>
           <p>
-            En <span class="brand-inline">UNDEVCODE</span> desarrollamos software de nivel empresarial, plataformas SaaS escalables y sitios web optimizados estratégicamente para dominar en motores de búsqueda. Fusionamos ingeniería de vanguardia con un diseño enfocado en la velocidad y el crecimiento continuo de tu negocio.
+            En <span class="brand-inline">UNDEVCODE</span> desarrollamos software de alto rendimiento, plataformas SaaS escalables y sitios web optimizados estratégicamente para maximizar su visibilidad en buscadores. Fusionamos ingeniería de vanguardia con un diseño enfocado en la velocidad y el crecimiento continuo de tu negocio.
           </p>
           <p>
-            Convertimos el código en tu mayor ventaja competitiva: 
-            <span class="text-accent">Ingeniería Sólida. Indexación Eficaz. Escala Garantizada.</span>
+            Transformamos ideas ambiciosas en productos digitales preparados para competir, crecer y liderar. <br>
+            <span class="text-accent">
+              Estrategia. Tecnología. Resultados.
+            </span>
           </p>
         </div>
 
         <!-- Métricas limpias en español -->
         <div class="stats-row">
           <div class="stat-item">
-            <span class="stat-number">+15</span>
-            <span class="stat-label">Sistemas Desplegados</span>
+            <span class="stat-number">+10</span>
+            <span class="stat-label">Proyectos desarrollados</span>
           </div>
+
           <div class="stat-item">
-            <span class="stat-number">100%</span>
-            <span class="stat-label">Disponibilidad del Servicio</span>
+            <span class="stat-number">+5</span>
+            <span class="stat-label">Años de experiencia</span>
           </div>
+
           <div class="stat-item">
-            <span class="stat-number">&lt; 1s</span>
-            <span class="stat-label">Respuesta de Carga</span>
+            <span class="stat-number">∞</span>
+            <span class="stat-label">Posibilidades para escalar</span>
           </div>
         </div>
       </div>
@@ -66,6 +70,7 @@
   padding: 6rem 0;
   display: flex;
   align-items: center;
+  scroll-margin-top: 64px;
 }
 
 .content-container {
@@ -90,7 +95,7 @@
   position: absolute;
   inset: 0;
   background-size: 60px 60px;
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(0, 112, 243, 0.05) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(0, 112, 243, 0.05) 1px, transparent 1px);
   mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 80%);
