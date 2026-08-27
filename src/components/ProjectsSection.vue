@@ -159,8 +159,8 @@ const projects = [
     shortDescription: 'Directorio comercial autogestionable con geolocalización.',
     fullDescription: 'Una plataforma robusta donde los comercios locales pueden crear su presencia digital en minutos. Cuenta con subida de imágenes optimizada, SEO automático y sistema de reviews verificado.',
     image: '/project-guiadigital.svg',
-    tags: ['Laravel', 'Bootstrap', 'MySQL', 'AWS S3'],
-    link: 'https://guiadigital.com.ar'
+    tags: ['Laravel', 'Bootstrap', 'MySQL', 'AWS S3']
+    // link: 'https://guiadigital.com.ar'
   },
   {
     name: 'ToppingFly',
