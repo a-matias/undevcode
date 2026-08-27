@@ -2,13 +2,15 @@
   <div class="app">
     <NavBar />
 
-    <StartSection />
+    <main>
+      <StartSection />
 
-    <AboutSection />
+      <AboutSection />
 
-    <ServicesSection />
+      <ServicesSection />
 
-    <ProjectsSection />
+      <ProjectsSection />
+    </main>
 
     <FooterSection />
   </div>

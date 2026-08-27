@@ -43,7 +43,7 @@
         </div>
 
         <div class="grid-item nav-box">
-          <h5 class="box-title">Explorar</h5>
+          <h3 class="box-title">Explorar</h3>
           <nav class="footer-nav">
             <a href="#inicio" class="nav-link">Inicio</a>
             <a href="#nosotros" class="nav-link">Nosotros</a>
@@ -53,7 +53,7 @@
         </div>
 
         <div class="grid-item services-box">
-          <h5 class="box-title">Expertise</h5>
+          <h3 class="box-title">Expertise</h3>
           <ul class="tech-list">
             <li>Desarrollo Web Full Stack</li>
             <li>Arquitectura Cloud</li>
@@ -63,7 +63,7 @@
         </div>
 
         <div class="grid-item contact-box">
-          <h5 class="box-title">Escribinos</h5>
+          <h3 class="box-title">Escribinos</h3>
           
           <form @submit.prevent="submitForm" class="mini-form">
             <div class="input-group">
@@ -79,7 +79,7 @@
               <textarea 
                 v-model="form.message" 
                 placeholder="Breve descripción..." 
-                rows="2" 
+                rows="3" 
                 class="form-input form-textarea"
               ></textarea>
             </div>
@@ -96,8 +96,8 @@
 
           <div class="social-links">
             <a href="#" class="social-pill">LinkedIn</a>
-            <a href="#" class="social-pill">Instagram</a>
-            <a href="#" class="social-pill">GitHub</a>
+            <a href="https://www.instagram.com/undevcode/" class="social-pill" target="_blank">Instagram</a>
+            <a href="https://github.com/undevcode-ok/" class="social-pill" target="_blank">GitHub</a>
           </div>
         </div>
       </div>
@@ -121,6 +121,8 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, reactive } from 'vue'
+import emailjs from '@emailjs/browser'
+import Swal from 'sweetalert2'
 
 const currentYear = new Date().getFullYear()
 const timeString = ref('')
@@ -133,21 +135,65 @@ const form = reactive({
   message: ''
 })
 
-// Lógica de envío simulada
+// ENV (Vite)
+const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
+const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+
+// Envío real del mail
 const submitForm = async () => {
+  if (!form.email || !form.message) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Faltan datos',
+      text: 'Por favor completá el email y el mensaje.',
+      confirmButtonColor: '#ff00c8'
+    })
+    return
+  }
+
   loading.value = true
-  // Aquí iría tu llamada a la API (ej. Formspree, EmailJS o tu backend)
-  console.log('Enviando formulario:', form)
-  
-  setTimeout(() => {
+
+  const templateParams = {
+    from_email: form.email,
+    message: form.message
+  }
+
+  try {
+    const response = await emailjs.send(
+      SERVICE_ID,
+      TEMPLATE_ID,
+      templateParams,
+      PUBLIC_KEY
+    )
+
+    if (response.status === 200) {
+      Swal.fire({
+        icon: 'success',
+        title: '¡Mensaje enviado!',
+        text: 'Gracias por escribirnos, te respondemos a la brevedad 🚀',
+        confirmButtonColor: '#10b981'
+      })
+
+      form.email = ''
+      form.message = ''
+    }
+  } catch (error) {
+    console.error('Error al enviar el correo:', error)
+
+    Swal.fire({
+      icon: 'error',
+      title: 'Ups...',
+      text: 'No pudimos enviar el mensaje. Probá nuevamente en unos minutos.',
+      confirmButtonColor: '#ef4444'
+    })
+  } finally {
     loading.value = false
-    alert('Mensaje enviado (Simulación)')
-    form.email = ''
-    form.message = ''
-  }, 1500)
+  }
 }
 
-// Función para el reloj en vivo (Zona horaria Argentina)
+
+// Reloj en vivo (Argentina)
 const updateTime = () => {
   const options = { 
     timeZone: 'America/Argentina/Buenos_Aires',
@@ -168,6 +214,7 @@ onUnmounted(() => {
   if (timeInterval) clearInterval(timeInterval)
 })
 </script>
+
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap');
