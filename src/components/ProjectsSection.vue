@@ -163,7 +163,7 @@ const projects = [
     link: 'https://guiadigital.com.ar'
   },
   {
-    name: 'ToppinFly',
+    name: 'ToppingFly',
     shortDescription: 'Sistema de reservas gastronómicas de alta demanda.',
     fullDescription: 'Diseñado para restaurantes de alto tráfico, ToppinFly gestiona mesas, listas de espera y pedidos anticipados. Permite a los comensales ver el menú y pedir antes de sentarse, reduciendo tiempos de espera.',
     image: 'https://placehold.co/800x600/f59e0b/white?text=ToppinFly',
